@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTheme = AppTheme();
     return FluentApp(
-      title: 'Flutter Demo',
+      title: 'Docker client',
       themeMode: appTheme.mode,
-      home: HomeScreen(),
+      home: const HomeScreen(),
       theme: ThemeData(
         accentColor: appTheme.color,
         visualDensity: VisualDensity.standard,
