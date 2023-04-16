@@ -1,8 +1,10 @@
+import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/home-screen.dart';
 import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
+import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 bool get isDesktop {
@@ -46,7 +48,12 @@ class MyApp extends StatelessWidget {
     return FluentApp(
       title: 'Docker client',
       themeMode: appTheme.mode,
-      home: const HomeScreen(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => AddressesProvider())
+        ],
+        child: const HomeScreen(),
+      ),
       theme: ThemeData(
         accentColor: appTheme.color,
         visualDensity: VisualDensity.standard,

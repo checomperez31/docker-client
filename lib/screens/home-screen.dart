@@ -1,6 +1,9 @@
 import 'package:docker_client/models/menu_option.dart';
+import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/container/container-list.dart';
+import 'package:docker_client/screens/directions/directions.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,38 +20,46 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
   List<MenuOption> options = [
     MenuOption(title: 'Contenedores', icon: FluentIcons.content_settings),
     MenuOption(title: 'Imagenes', icon: FluentIcons.apps_content),
+    MenuOption(title: 'Direcciones', icon: FluentIcons.m_s_lists_connected),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return NavigationView(
-      appBar: NavigationAppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(options[index].title),
-            Text('IP')
-          ],
+    return Consumer<AddressesProvider>(
+      builder: (context, provider, child) => NavigationView(
+        appBar: NavigationAppBar(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(options[index].title),
+                if ( provider.usedAddress != null ) Text(provider.usedAddress!)
+              ],
+            ),
+            automaticallyImplyLeading: false
         ),
-        automaticallyImplyLeading: false
-      ),
-      pane: NavigationPane(
-        selected: index,
-        displayMode: PaneDisplayMode.auto,
-        onChanged: (i) => setState(() => index = i),
-        items: [
-          PaneItem(
-            icon: Icon(options[0].icon),
-            title: Text(options[0].title),
-            body: ContainerList(),
-          ),
-          PaneItem(
-            icon: Icon(options[1].icon),
-            title: Text(options[1].title),
-            body: Text('Contenedores2'),
-          )
-        ].cast<NavigationPaneItem>()
-      ),
+        pane: NavigationPane(
+            selected: index,
+            displayMode: PaneDisplayMode.auto,
+            onChanged: (i) => setState(() => index = i),
+            items: [
+              PaneItem(
+                icon: Icon(options[0].icon),
+                title: Text(options[0].title),
+                body: ContainerList(addressesProvider: provider),
+              ),
+              PaneItem(
+                icon: Icon(options[1].icon),
+                title: Text(options[1].title),
+                body: Text('Contenedores2'),
+              ),
+              PaneItem(
+                icon: Icon(options[2].icon),
+                title: Text(options[2].title),
+                body: Directions(),
+              )
+            ].cast<NavigationPaneItem>()
+        ),
+      )
     );
   }
 

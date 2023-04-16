@@ -1,3 +1,4 @@
+import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/container/container-list-actions.dart';
 import 'package:docker_client/screens/container/container-list-provider.dart';
 import 'package:docker_client/screens/container/container-list-status.dart';
@@ -6,7 +7,8 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 
 class ContainerList extends StatelessWidget {
-  const ContainerList({Key? key}) : super(key: key);
+  AddressesProvider addressesProvider;
+  ContainerList({Key? key, required this.addressesProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class ContainerList extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         ChangeNotifierProvider(
-          create: (_) => ContainerListProvider(),
+          create: (_) => ContainerListProvider(addressesProvider),
           child: Consumer<ContainerListProvider>(
             builder: (context, provider, child) => Expanded(
               child: Padding(
