@@ -9,4 +9,25 @@ class ContainerItemService {
     print(res.body);
     return ContainerItem.decodeListFromString(res.bodyBytes);
   }
+
+  Future<void> restart(String id) async {
+    Uri uri = Uri.http('localhost:2375', '/v1.24/containers/$id/restart');
+    print( uri );
+    final res = await http.post( uri );
+    print(res.body);
+  }
+
+  Future<void> stop(String id) async {
+    Uri uri = Uri.http('localhost:2375', '/v1.24/containers/$id/stop');
+    print( uri );
+    final res = await http.post( uri );
+    print(res.body);
+  }
+
+  Future<void> remove(String id) async {
+    Uri uri = Uri.http('localhost:2375', '/v1.24/containers/$id');
+    print( uri );
+    final res = await http.delete( uri );
+    print(res.body);
+  }
 }

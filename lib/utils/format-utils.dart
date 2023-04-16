@@ -17,11 +17,11 @@ class FormatUtils {
     int minutes = from.minute;
     int seconds = from.second;
     String result = '';
-    if ( month > 0 ) return '${month}month ';
-    if ( days > 0 ) return '${days}d ';
-    if ( hours > 0 ) return '${hours}h ';
-    if ( minutes > 0 ) return '${minutes}m ';
-    if ( seconds > 0 ) return '${seconds}s';
+    if ( month > 0 ) return '$month month ';
+    if ( days > 0 ) return '$days d ';
+    if ( hours > 0 ) return '$hours h ';
+    if ( minutes > 0 ) return '$minutes m ';
+    if ( seconds > 0 ) return '$seconds s';
     return result;
   }
 
