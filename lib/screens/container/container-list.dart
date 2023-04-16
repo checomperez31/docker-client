@@ -30,21 +30,31 @@ class ContainerList extends StatelessWidget {
                         const TableRow(
                           children: [
                             // TableCell(child: Text('ID')),
-                            TableCell(child: Text('Names')),
-                            TableCell(child: Text('Image')),
-                            TableCell(child: Text('Ports')),
-                            TableCell(child: Text('Status')),
+                            TableCell(child: Text('Container', style: TextStyle(fontWeight: FontWeight.bold))),
+                            TableCell(child: Text('Ports', style: TextStyle(fontWeight: FontWeight.bold))),
+                            TableCell(child: Text('Status', style: TextStyle(fontWeight: FontWeight.bold))),
+                            TableCell(child: Text('Actions', style: TextStyle(fontWeight: FontWeight.bold))),
                           ]
                         ),
                         ...provider.elements.map((e) => TableRow(
                           children: [
                             // TableCell(child: Text(e.id ?? 'Sin ID')),
-                            TableCell(child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: e.names?.map((e) => Text(e ?? 'Sin nombre')).toList() ?? [],
-                            )),
-                            TableCell(child: Text(e.image ?? 'Sin imagen')),
                             TableCell(
+                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Name: '),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: e.names?.map((e) => Text(e ?? 'Sin nombre')).toList() ?? [],
+                                    ),
+                                    if ( e.image != null ) Text('Imagen: ${e.image}')
+                                  ]
+                                )
+                            ),
+                            TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: e.ports?.map((e) => Text('${e.public} -> ${e.private}')).toList() ?? [],
@@ -54,13 +64,20 @@ class ContainerList extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  if ( e.created != null ) Text(e.created!.toString()),
                                   if ( e.created != null ) Text( FormatUtils.formatSeconds( e.created ) ),
                                   if ( e.state != null ) Text(e.state!),
                                   if ( e.status != null ) Text(e.status!),
                                 ]
                               )
                             ),
+                            TableCell(
+                                child: Row(
+                                  children: [
+                                    Button(child: Text('Hola 1'), onPressed: () {}),
+                                    Button(child: Text('Hola 2'), onPressed: () {})
+                                  ],
+                                )
+                            )
                           ]
                         )).toList()
                       ],
