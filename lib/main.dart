@@ -1,3 +1,4 @@
+import 'package:docker_client/preferences/preferences.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/home-screen.dart';
 import 'package:docker_client/theme.dart';
@@ -18,6 +19,7 @@ bool get isDesktop {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Preferences.init();
   if (isDesktop) {
     await flutter_acrylic.Window.initialize();
     await WindowManager.instance.ensureInitialized();
@@ -32,6 +34,7 @@ void main() async {
       await windowManager.show();
       await windowManager.setPreventClose(false);
       await windowManager.setSkipTaskbar(false);
+      await windowManager.setTitle('Cliente de docker');
     });
   }
 

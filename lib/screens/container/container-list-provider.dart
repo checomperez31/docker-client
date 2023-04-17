@@ -10,6 +10,7 @@ class ContainerListProvider extends ChangeNotifier {
   bool loadingRestart = false;
   bool loadingStop = false;
   bool loadingKill = false;
+  bool loadingStart = false;
 
   ContainerListProvider(this.addressesProvider);
 
@@ -41,6 +42,14 @@ class ContainerListProvider extends ChangeNotifier {
     notifyListeners();
     if ( addressesProvider.usedAddress != null ) await ContainerItemService(addressesProvider.usedAddress!).remove(id);
     loadingKill = false;
+    await loadData();
+  }
+
+  start(String id) async {
+    loadingStart = true;
+    notifyListeners();
+    if ( addressesProvider.usedAddress != null ) await ContainerItemService(addressesProvider.usedAddress!).start(id);
+    loadingStart = false;
     await loadData();
   }
 }

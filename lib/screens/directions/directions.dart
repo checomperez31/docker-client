@@ -28,7 +28,7 @@ class Directions extends StatelessWidget {
                       ),
                       ...provider.addresses.map((e) {
                         return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 3),
+                          padding: const EdgeInsets.symmetric(vertical: 3),
                           child: Row(
                             children: [
                               Expanded(
@@ -38,12 +38,26 @@ class Directions extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(e),
-                                          if ( e != provider.usedAddress ) Button(onPressed: () {
-                                            provider.use( e );
-                                          }, child: Text('Usar'))
+                                          if ( e != provider.usedAddress ) Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Button(
+                                                onPressed: () {
+                                                  provider.use( e );
+                                                },
+                                                child: const Text('Usar')
+                                              ),
+                                              Button(
+                                                onPressed: () {
+                                                  provider.delete( e );
+                                                },
+                                                child: const Text('Eliminar')
+                                              )
+                                            ],
+                                          )
                                         ],
                                       ),
-                                      Divider()
+                                      const Divider()
                                     ],
                                   )
                               )

@@ -32,14 +32,23 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(options[index].title),
-                if ( provider.usedAddress != null ) Text(provider.usedAddress!)
+                if ( provider.usedAddress != null ) ComboBox(
+                  value: provider.usedAddress,
+                  items: provider.addresses.map((e) => ComboBoxItem(value: e, child: Text(e))).toList(),
+                  onChanged: (option) {
+                    if ( option != null ) {
+                      provider.use( option );
+                    }
+                  },
+                ),
+                /*if ( provider.usedAddress != null ) Text(provider.usedAddress!)*/
               ],
             ),
             automaticallyImplyLeading: false
         ),
         pane: NavigationPane(
             selected: index,
-            displayMode: PaneDisplayMode.auto,
+            displayMode: PaneDisplayMode.compact,
             onChanged: (i) => setState(() => index = i),
             items: [
               PaneItem(
@@ -50,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
               PaneItem(
                 icon: Icon(options[1].icon),
                 title: Text(options[1].title),
-                body: Text('Contenedores2'),
+                body: Text('Aquí van a ir las imágenes'),
               ),
               PaneItem(
                 icon: Icon(options[2].icon),

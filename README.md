@@ -1,6 +1,6 @@
 # docker_client
 
-A new Flutter project.
+This project was made for manage docker remote server data
 
 ## Getting Started
 
@@ -14,3 +14,8 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Release
+you can release with next command
+
+    flutter pub run msix:create

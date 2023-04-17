@@ -28,6 +28,13 @@ class ContainerItemService {
     print(res.body);
   }
 
+  Future<void> start(String id) async {
+    Uri uri = Uri.http(url, '/v1.24/containers/$id/start');
+    print( uri );
+    final res = await http.post( uri );
+    print(res.body);
+  }
+
   Future<void> remove(String id) async {
     Uri uri = Uri.http(url, '/v1.24/containers/$id');
     print( uri );

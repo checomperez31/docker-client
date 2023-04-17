@@ -10,7 +10,7 @@ class ContainerListStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 3),
+      padding: const EdgeInsets.symmetric(vertical: 3),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -31,7 +31,16 @@ class ContainerListStatus extends StatelessWidget {
   Widget createBadge() {
     Color background = Colors.red;
     Color text = Colors.white;
-    if ( entity.state == 'running' ) background = Colors.green;
+    switch( entity.state ) {
+      case 'running': {
+        background = Colors.green;
+        break;
+      }
+      case 'created': {
+        background = Colors.blue;
+        break;
+      }
+    }
     return Container(
       decoration: BoxDecoration(
         color: background,
