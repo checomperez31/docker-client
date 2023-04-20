@@ -1,5 +1,6 @@
 import 'package:docker_client/models/menu_option.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
+import 'package:docker_client/screens/container/container-home.dart';
 import 'package:docker_client/screens/container/container-list.dart';
 import 'package:docker_client/screens/directions/directions.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
             ),
             automaticallyImplyLeading: false
         ),
-        pane: NavigationPane(
+      pane: NavigationPane(
             selected: index,
             displayMode: PaneDisplayMode.compact,
             onChanged: (i) => setState(() => index = i),
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
               PaneItem(
                 icon: Icon(options[0].icon),
                 title: Text(options[0].title),
-                body: ContainerList(addressesProvider: provider),
+                body: ContainerHome(addressesProvider: provider),
               ),
               PaneItem(
                 icon: Icon(options[1].icon),

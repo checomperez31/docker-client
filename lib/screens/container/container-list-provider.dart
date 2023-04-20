@@ -12,12 +12,15 @@ class ContainerListProvider extends ChangeNotifier {
   bool loadingKill = false;
   bool loadingStart = false;
 
-  ContainerListProvider(this.addressesProvider);
+  ContainerListProvider(this.addressesProvider) {
+    loadData();
+  }
 
   loadData() async {
     loading = true;
     notifyListeners();
     if ( addressesProvider.usedAddress != null ) elements = await ContainerItemService(addressesProvider.usedAddress!).getList();
+    loading = false;
     notifyListeners();
   }
 

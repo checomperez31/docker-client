@@ -7,29 +7,27 @@ class ContainerListDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Name(s): ', style: TextStyle(fontWeight: FontWeight.bold)),
-              if ( entity.names != null ) Padding(
-                padding: const EdgeInsets.only(bottom: 2),
-                child: Row(
-                  children: entity.names!.map((e) {
-                    String res = e;
-                    if ( e.startsWith('/') ) res = e.substring(1);
-                    return Text( res );
-                  }).toList(),
-                ),
-              ),
-              if ( entity.image != null ) Text('Imagen: ${entity.image}', style: const TextStyle(
-                  fontSize: 12, color: Color(0xFF777777))
-              )
-            ]
-        )
-      ],
+    return Padding(
+        padding: EdgeInsets.only(top: 3),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ...entity.names!.map((e) {
+                  String res = e;
+                  if ( e.startsWith('/') ) res = e.substring(1);
+                  return Text(res, style: const TextStyle(fontWeight: FontWeight.bold));
+                }).toList(),
+                if ( entity.image != null ) Text(entity.image!, style: const TextStyle(
+                    fontSize: 12, color: Color(0xFF777777))
+                )
+              ],
+            )
+          )
+        ],
+      )
     );
   }
 }

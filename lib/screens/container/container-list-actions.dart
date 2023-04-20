@@ -5,34 +5,56 @@ import 'package:docker_client/models/container_item.dart';
 class ContainerListActions extends StatelessWidget {
   ContainerItem entity;
   ContainerListProvider provider;
+  final void Function(ContainerItem id)? onSelect;
 
-  ContainerListActions({Key? key, required this.entity, required this.provider}) : super(key: key);
+  ContainerListActions({Key? key, required this.entity, required this.provider, this.onSelect}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        if ( entity.state == 'exited' || entity.state == 'running' ) Button(child: const Text('Reiniciar'), onPressed: provider.loadingRestart ? null: () {
-          provider.restart( entity.id! );
-        }),
-        if ( entity.state == 'running' ) Button(child: const Text('Detener'), onPressed: provider.loadingStop ? null: () {
-          confirm(context, '¿Está seguro de detener éste contenedor?').then((value) {
-            if (value == true) {
-              provider.stop( entity.id! );
+        if ( entity.state == 'exited' || entity.state == 'running' ) Button(
+          onPressed: provider.loadingRestart ? null: () {
+            if (onSelect != null) {
+              onSelect!(entity);
             }
-          });
-        }),
-        if ( entity.state == 'created' ) Button(child: const Text('Iniciar'), onPressed: provider.loadingStart ? null: () {
-          provider.start( entity.id! );
-        }),
-        if ( entity.state == 'exited' || entity.state == 'created' ) Button(child: const Text('Eliminar'), onPressed: provider.loadingKill ? null: () {
-          confirm(context, '¿Está seguro de eliminar éste contenedor?').then((value) {
-            if (value == true) {
-              provider.remove( entity.id! );
-            }
-          });
-        }),
+          },
+          child: const Icon(FluentIcons.backlog_list),
+        ),
+        if ( entity.state == 'exited' || entity.state == 'running' ) Button(
+          onPressed: provider.loadingRestart ? null: () {
+            provider.restart( entity.id! );
+          },
+          child: const Icon(FluentIcons.reset),
+        ),
+        if ( entity.state == 'running' ) Button(
+          onPressed: provider.loadingStop ? null: () {
+            confirm(context, '¿Está seguro de detener éste contenedor?').then((value) {
+              if (value == true) {
+                provider.stop( entity.id! );
+              }
+            });
+          },
+          child: const Icon(FluentIcons.stop),
+        ),
+        if ( entity.state == 'created' ) Button(
+          onPressed: provider.loadingStart ? null: () {
+            provider.start( entity.id! );
+          },
+          child: const Icon(FluentIcons.play),
+        ),
+        if ( entity.state == 'exited' || entity.state == 'created' ) Button(
+          onPressed: provider.loadingKill ? null: () {
+            confirm(context, '¿Está seguro de eliminar éste contenedor?').then((value) {
+              if (value == true) {
+                provider.remove( entity.id! );
+              }
+            });
+          },
+          child: const Icon(FluentIcons.delete)
+        ),
       ],
     );
   }
