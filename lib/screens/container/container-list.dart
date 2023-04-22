@@ -31,7 +31,11 @@ class ContainerList extends StatelessWidget {
                           onPressed: addressesProvider.usedAddress == null && !provider.loading? null: () {
                             provider.loadData();
                           },
-                          child: const Text('Actualizar')
+                          child: provider.loading ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: ProgressRing(strokeWidth: 2),
+                          ): const Icon(FluentIcons.refresh)
                       )
                     ],
                   ),

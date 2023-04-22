@@ -29,7 +29,7 @@ void main() async {
         windowButtonVisibility: true,
       );
       await windowManager.setSize(const Size(755, 545));
-      await windowManager.setMinimumSize(const Size(350, 600));
+      await windowManager.setMinimumSize(const Size(350, 500));
       await windowManager.center();
       await windowManager.show();
       await windowManager.setPreventClose(false);
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         ],
         child: const HomeScreen(),
       ),
-      theme: ThemeData(
+      theme: FluentThemeData(
         accentColor: appTheme.color,
         visualDensity: VisualDensity.standard,
         focusTheme: FocusThemeData(
