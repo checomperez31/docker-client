@@ -45,7 +45,13 @@ class ContainerLogs extends StatelessWidget {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: provider.list.map((e) => Text(e, style: TextStyle(color: Colors.white),)).toList(),
+                          children: provider.logList.map((e) => SelectableText.rich(TextSpan(
+                            mouseCursor: MouseCursor.defer,
+                            children: [
+                              if ( e.timestamp != null ) TextSpan(text: e.timestamp!, style: const TextStyle(color: Color(0xff3ceae3))),
+                              if ( e.log != null ) TextSpan(text: e.log!, style: const TextStyle(color: Colors.white)),
+                            ]
+                          ))).toList(),
                         ).expanded()
                       ],
                     ),

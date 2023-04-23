@@ -48,6 +48,6 @@ class ContainerItemService {
     Uri uri = Uri.http(url, '/v1.24/containers/$id/logs', {'tail': tail, 'stdout': 'true', 'timestamps': 'true'});
     print( uri );
     final res = await http.get( uri );
-    return utf8.decode(res.bodyBytes);
+    return res.body;
   }
 }
