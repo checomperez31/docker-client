@@ -7,8 +7,8 @@ class FormatUtils {
     return milliseconds != null ? DateTime.fromMillisecondsSinceEpoch( milliseconds ): null;
   }
 
-  static String formatSeconds(int? secondsToString) {
-    if ( secondsToString == null) return '';
+  static String formatSeconds(int? secondsToString, {String? isNull}) {
+    if ( secondsToString == null) return isNull ?? '';
     Duration dur = Duration(seconds: secondsToString);
     DateTime from = DateTime.now().subtract( dur );
     int month = from.month;
@@ -46,5 +46,12 @@ class FormatUtils {
       format = format.replaceAll('Z', '$sign$hours:$remainingMinutes');
     }
     return DateFormat( format ).format( date );
+  }
+
+  static String formatBytes(int? bytes, {String? isNull}) {
+    if ( bytes == null) return isNull ?? '';
+    int kb = (bytes / 1024).round();
+    int mb = (kb / 1024).round();
+    return '$mb MB';
   }
 }

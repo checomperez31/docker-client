@@ -22,6 +22,15 @@ class ContainerItem {
     this.status,
   });
 
+  String simplifiedName() {
+    String name = names != null && names!.isNotEmpty ? names![0]: 'NA';
+    return name.startsWith('/') ? name.substring(1): name;
+  }
+  
+  String simplifiedId() {
+    return id!.substring(0, 12);
+  }
+
   factory ContainerItem.fromMap(Map<String, dynamic> json) => ContainerItem(
     id: json['Id'],
     names: json['Names'] != null?(json['Names'] as List).map((e) => e.toString()).toList(): [],

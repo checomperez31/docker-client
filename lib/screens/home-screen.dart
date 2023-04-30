@@ -3,6 +3,7 @@ import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/container/container-home.dart';
 import 'package:docker_client/screens/container/container-list.dart';
 import 'package:docker_client/screens/directions/directions.dart';
+import 'package:docker_client/screens/image/image-list.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -29,45 +30,46 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
     return Consumer<AddressesProvider>(
       builder: (context, provider, child) => NavigationView(
         appBar: NavigationAppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(options[index].title),
-                if ( provider.usedAddress != null ) ComboBox(
-                  value: provider.usedAddress,
-                  items: provider.addresses.map((e) => ComboBoxItem(value: e, child: Text(e))).toList(),
-                  onChanged: (option) {
-                    if ( option != null ) {
-                      provider.use( option );
-                    }
-                  },
-                ),
-                /*if ( provider.usedAddress != null ) Text(provider.usedAddress!)*/
-              ],
-            ),
-            automaticallyImplyLeading: false
+          height: 40,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('${options[index].title} ${provider.usedAddress != null ? provider.usedAddress: ''}'),
+              if ( provider.usedAddress != null ) ComboBox(
+                value: provider.usedAddress,
+                items: provider.addresses.map((e) => ComboBoxItem(value: e, child: Text(e, style: TextStyle(color: Colors.black),))).toList(),
+                onChanged: (option) {
+                  if ( option != null ) {
+                    provider.use( option );
+                  }
+                },
+              ),
+              /*if ( provider.usedAddress != null ) Text(provider.usedAddress!)*/
+            ],
+          ),
+          automaticallyImplyLeading: false,
         ),
-      pane: NavigationPane(
-            selected: index,
-            displayMode: PaneDisplayMode.compact,
-            onChanged: (i) => setState(() => index = i),
-            items: [
-              PaneItem(
-                icon: Icon(options[0].icon),
-                title: Text(options[0].title),
-                body: ContainerHome(addressesProvider: provider),
-              ),
-              PaneItem(
-                icon: Icon(options[1].icon),
-                title: Text(options[1].title),
-                body: Text('Aquí van a ir las imágenes'),
-              ),
-              PaneItem(
-                icon: Icon(options[2].icon),
-                title: Text(options[2].title),
-                body: Directions(),
-              )
-            ].cast<NavigationPaneItem>()
+        pane: NavigationPane(
+          selected: index,
+          displayMode: PaneDisplayMode.compact,
+          onChanged: (i) => setState(() => index = i),
+          items: [
+            PaneItem(
+              icon: Icon(options[0].icon),
+              title: Text(options[0].title),
+              body: ContainerHome(addressesProvider: provider),
+            ),
+            PaneItem(
+              icon: Icon(options[1].icon),
+              title: Text(options[1].title),
+              body: ImageList(addressesProvider: provider)
+            ),
+            PaneItem(
+              icon: Icon(options[2].icon),
+              title: Text(options[2].title),
+              body: Directions(),
+            )
+          ].cast<NavigationPaneItem>()
         ),
       )
     );

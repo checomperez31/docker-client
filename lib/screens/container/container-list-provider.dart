@@ -11,6 +11,7 @@ class ContainerListProvider extends ChangeNotifier {
   bool loadingStop = false;
   bool loadingKill = false;
   bool loadingStart = false;
+  bool disposed = false;
 
   ContainerListProvider(this.addressesProvider) {
     loadData();
@@ -54,5 +55,18 @@ class ContainerListProvider extends ChangeNotifier {
     if ( addressesProvider.usedAddress != null ) await ContainerItemService(addressesProvider.usedAddress!).start(id);
     loadingStart = false;
     await loadData();
+  }
+
+  @override
+  void dispose() {
+    disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if ( !disposed ) {
+      super.notifyListeners();
+    }
   }
 }

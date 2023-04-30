@@ -1,4 +1,5 @@
 import 'package:docker_client/providers/addresses_provider.dart';
+import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class Directions extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Listado de direcciones'),
+                          Text('Listado de direcciones', style: TextStyle(color: AppTheme.accentTextColor, fontWeight: FontWeight.bold),),
                           Button(onPressed: () async {
                             String? data = await showAddAddress(context);
                             provider.add( data );
@@ -37,7 +38,7 @@ class Directions extends StatelessWidget {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(e),
+                                          Text(e, style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textColor),),
                                           if ( e != provider.usedAddress ) Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
