@@ -119,6 +119,22 @@ class MyApp extends StatelessWidget {
               color: AppTheme.accentTextColor
           ),
         ),
+        dividerTheme: DividerThemeData(
+          decoration: BoxDecoration(
+            color: AppTheme.textColor
+          )
+        ),
+        dialogTheme: ContentDialogThemeData(
+          decoration: BoxDecoration(
+            color: AppTheme.scaffoldColor,
+            borderRadius: BorderRadius.circular(8)
+          ),
+          actionsDecoration: BoxDecoration(
+              color: AppTheme.scaffoldColor,
+              borderRadius: BorderRadius.circular(8)
+          )
+        ),
+
       ),
     );
   }

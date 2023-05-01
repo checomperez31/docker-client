@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${options[index].title} ${provider.usedAddress != null ? provider.usedAddress: ''}'),
+              Text('${options[index].title} ${provider.usedAddress ?? ''}'),
               if ( provider.usedAddress != null ) ComboBox(
                 value: provider.usedAddress,
                 items: provider.addresses.map((e) => ComboBoxItem(value: e, child: Text(e, style: TextStyle(color: Colors.black),))).toList(),

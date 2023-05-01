@@ -1,5 +1,6 @@
 import 'package:docker_client/models/image-item.dart';
 import 'package:docker_client/screens/image/image-list-provider.dart';
+import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ImageListActions extends StatelessWidget {
@@ -32,7 +33,7 @@ class ImageListActions extends StatelessWidget {
     final result = showDialog<bool?>(
         context: context,
         builder: (ctx) => ContentDialog(
-          title: const Text('Atención', style: TextStyle(fontSize: 20)),
+          title: Text('Atención', style: TextStyle(fontSize: 20, color: AppTheme.accentTextColor)),
           content: Row(
             mainAxisSize: MainAxisSize.max,
             children: [

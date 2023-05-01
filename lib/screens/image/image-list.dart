@@ -49,10 +49,10 @@ class ImageList extends StatelessWidget {
                     ],
                   ),
                   Table(
-                    border: const TableBorder(
+                    border: TableBorder(
                         horizontalInside: BorderSide(
                             width: 1,
-                            color: Colors.grey,
+                            color: AppTheme.textColor,
                             style: BorderStyle.solid
                         )
                     ),

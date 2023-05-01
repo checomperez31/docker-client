@@ -81,7 +81,7 @@ class Directions extends StatelessWidget {
     final result = showDialog<String?>(
       context: context,
       builder: (ctx) => ContentDialog(
-        title: const Text('Agregar direccion', style: TextStyle(fontSize: 20)),
+        title: Text('Agregar direccion', style: TextStyle(fontSize: 20, color: AppTheme.accentTextColor)),
         content: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -91,6 +91,11 @@ class Directions extends StatelessWidget {
                 children: [
                   TextBox(
                     controller: controller,
+                    style: TextStyle(color: AppTheme.accentTextColor),
+                    cursorColor: AppTheme.accentTextColor,
+                    decoration: BoxDecoration(
+                      color: AppTheme.buttonBgColor
+                    ),
                   )
                 ],
               )
