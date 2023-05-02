@@ -13,7 +13,35 @@ class AppTheme extends ChangeNotifier {
     notifyListeners();
   }
 
-  ThemeMode _mode = ThemeMode.system;
+  static Color get accentTextColor {
+    return const Color(0xFFBBBBBB);
+  }
+
+  static Color get textColor {
+    return const Color(0xFF989CA7);
+  }
+
+  static Color get disabledTextColor {
+    return const Color(0xFF5A616B);
+  }
+
+  static Color get scaffoldColor {
+    return const Color(0xff282A36);
+  }
+
+  static Color get scaffold2Color {
+    return const Color(0xff3A3D4C);
+  }
+
+  static Color get buttonBgColor {
+    return const Color(0xff4A4D5C);
+  }
+
+  static Color get buttonBgHoveredColor {
+    return const Color(0xff505362);
+  }
+
+  ThemeMode _mode = ThemeMode.dark;
   ThemeMode get mode => _mode;
   set mode(ThemeMode mode) {
     _mode = mode;

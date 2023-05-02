@@ -1,4 +1,5 @@
 import 'package:docker_client/models/container_item.dart';
+import 'package:docker_client/theme.dart';
 import 'package:docker_client/utils/format-utils.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -9,6 +10,7 @@ class ContainerListStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = TextStyle(fontSize: 12, color: AppTheme.textColor);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Column(
@@ -18,11 +20,11 @@ class ContainerListStatus extends StatelessWidget {
             if ( entity.created != null ) Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('Creado '),
-                Text( FormatUtils.formatSeconds( entity.created ) )
+                Text('Created ', style: style),
+                Text( FormatUtils.formatSeconds( entity.created ), style: style )
               ],
             ),
-            if ( entity.status != null ) Text(entity.status!),
+            if ( entity.status != null ) Text(entity.status!, style: style),
           ]
       ),
     );

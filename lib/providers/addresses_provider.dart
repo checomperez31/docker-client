@@ -11,7 +11,13 @@ class AddressesProvider extends ChangeNotifier {
   }
 
   add(String? data) {
-    if ( data != null && data.isNotEmpty) addresses.add( data.trim() );
+    if ( data != null && data.isNotEmpty) {
+      data = data.trim();
+      if ( !data.contains(':') ) {
+        data = '$data:2375';
+      }
+      addresses.add( data );
+    }
     Preferences.list = addresses;
     notifyListeners();
   }

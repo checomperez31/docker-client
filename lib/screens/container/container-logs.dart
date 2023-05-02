@@ -25,18 +25,22 @@ class ContainerLogs extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextBox(
-                        controller: TextEditingController(text: provider.tail),
-                        onChanged: (txt) {
-                          if (txt != null && !txt.isEmpty) {
-                            provider.tail = txt;
-                          } else {
-                            provider.tail = '50';
-                          }
-                        },
-                      ).expanded(),
-                      Button(child: Text('Actualizar'), onPressed: provider.logs)
+                      SizedBox(
+                        width: 100,
+                        child: TextBox(
+                          controller: TextEditingController(text: provider.tail),
+                          onChanged: (txt) {
+                            if (txt.isNotEmpty) {
+                              provider.tail = txt;
+                            } else {
+                              provider.tail = '50';
+                            }
+                          },
+                        ),
+                      ),
+                      Button(onPressed: provider.logs, child: const Icon(FluentIcons.sync))
                     ],
                   ),
                   SingleChildScrollView(

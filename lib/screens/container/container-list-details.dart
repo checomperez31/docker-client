@@ -1,4 +1,5 @@
 import 'package:docker_client/models/container_item.dart';
+import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ContainerListDetails extends StatelessWidget {
@@ -8,7 +9,7 @@ class ContainerListDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: 3),
+      padding: const EdgeInsets.only(top: 3),
       child: Row(
         children: [
           Expanded(
@@ -18,10 +19,10 @@ class ContainerListDetails extends StatelessWidget {
                 ...entity.names!.map((e) {
                   String res = e;
                   if ( e.startsWith('/') ) res = e.substring(1);
-                  return Text(res, style: const TextStyle(fontWeight: FontWeight.bold));
+                  return Text(res, style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor));
                 }).toList(),
-                if ( entity.image != null ) Text(entity.image!, style: const TextStyle(
-                    fontSize: 12, color: Color(0xFF777777))
+                if ( entity.image != null ) Text(entity.image!, style: TextStyle(
+                    fontSize: 12, color: AppTheme.textColor)
                 )
               ],
             )

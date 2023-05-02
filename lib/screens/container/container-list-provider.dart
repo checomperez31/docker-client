@@ -11,7 +11,7 @@ class ContainerListProvider extends ChangeNotifier {
   bool loadingStop = false;
   bool loadingKill = false;
   bool loadingStart = false;
-  bool _disposed = false;
+  bool disposed = false;
 
   ContainerListProvider(this.addressesProvider) {
     loadData();
@@ -59,13 +59,13 @@ class ContainerListProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    _disposed = true;
+    disposed = true;
     super.dispose();
   }
 
   @override
   void notifyListeners() {
-    if ( !_disposed ) {
+    if ( !disposed ) {
       super.notifyListeners();
     }
   }

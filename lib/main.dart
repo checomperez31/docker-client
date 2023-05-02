@@ -64,6 +64,78 @@ class MyApp extends StatelessWidget {
           glowFactor: is10footScreen() ? 2.0 : 0.0,
         ),
       ),
+      darkTheme: FluentThemeData(
+        accentColor: appTheme.color,
+        scaffoldBackgroundColor: AppTheme.scaffoldColor,
+        acrylicBackgroundColor: Colors.black,
+        uncheckedColor: Colors.orange,
+        activeColor: Colors.purple,
+        navigationPaneTheme: NavigationPaneThemeData(
+          backgroundColor: AppTheme.scaffold2Color,
+          selectedTextStyle: ButtonState.all(TextStyle(color: AppTheme.accentTextColor)),
+          unselectedTextStyle: ButtonState.all(TextStyle(color: AppTheme.textColor)),
+          //Cannot view changes
+          // itemHeaderTextStyle: TextStyle(color: Colors.red)
+          // unselectedIconColor: ButtonState.all(AppTheme.textColor),
+          // selectedIconColor: ButtonState.all(Colors.red),
+          // Changes background button color
+          // tileColor: ButtonState.all(Colors.red)
+        ),
+        visualDensity: VisualDensity.standard,
+        focusTheme: FocusThemeData(
+          glowFactor: is10footScreen() ? 2.0 : 0.0,
+        ),
+        iconTheme: IconThemeData(
+          color: AppTheme.textColor
+        ),
+        buttonTheme: ButtonThemeData(
+          defaultButtonStyle: ButtonStyle(
+            backgroundColor: ButtonState.resolveWith((states) {
+              if ( states.isHovering ) return AppTheme.buttonBgHoveredColor;
+              return AppTheme.buttonBgColor;
+            }),
+            textStyle: ButtonState.resolveWith((states) {
+              if ( states.isHovering ) return TextStyle(color: AppTheme.accentTextColor);
+              if ( states.isDisabled ) return TextStyle(color: AppTheme.disabledTextColor);
+              return TextStyle(color: AppTheme.textColor);
+            }),
+            foregroundColor: ButtonState.resolveWith((states) {
+              return AppTheme.textColor;
+            })
+          ),
+        ),
+        tooltipTheme: TooltipThemeData(
+          textStyle: TextStyle(color: AppTheme.textColor),
+          decoration: BoxDecoration(
+            color: AppTheme.buttonBgColor,
+            borderRadius: BorderRadius.circular(8)
+          )
+        ),
+        typography: Typography.raw(
+          caption: TextStyle(
+            color: AppTheme.textColor
+          ),
+          body: TextStyle(
+              color: AppTheme.accentTextColor
+          ),
+        ),
+        dividerTheme: DividerThemeData(
+          decoration: BoxDecoration(
+            color: AppTheme.textColor
+          )
+        ),
+        dialogTheme: ContentDialogThemeData(
+          decoration: BoxDecoration(
+            color: AppTheme.scaffoldColor,
+            borderRadius: BorderRadius.circular(8)
+          ),
+          actionsDecoration: BoxDecoration(
+              color: AppTheme.scaffoldColor,
+              borderRadius: BorderRadius.circular(8)
+          )
+        ),
+
+      ),
     );
   }
 }
