@@ -40,10 +40,10 @@ class ImageList extends StatelessWidget {
                       Tooltip(
                           message: 'Eliminar imagenes sin Tag',
                           child: Button(
-                              onPressed: addressesProvider.usedAddress == null && !provider.loading? null: () {
-                                provider.loadData();
+                              onPressed: addressesProvider.usedAddress == null && !provider.loadingPrune? null: () {
+                                provider.prune();
                               },
-                              child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.remove)
+                              child: provider.loadingPrune ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.remove)
                           )
                       )
                     ],

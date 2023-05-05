@@ -27,7 +27,7 @@ class ImageItemService {
 
   Future<void> prune(bool onlyUntagged) async {
     final params = {
-      'dangling': onlyUntagged,
+      'dangling': '$onlyUntagged',
     };
     Uri uri = Uri.http(url, '/v1.24/images/prune', params);
     final res = await http.post( uri );
