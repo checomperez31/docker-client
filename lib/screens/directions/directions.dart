@@ -78,43 +78,53 @@ class Directions extends StatelessWidget {
 
   Future<String?> showAddAddress(BuildContext context) async {
     TextEditingController controller = TextEditingController();
+    final formKey = GlobalKey<FormState>();
     final result = showDialog<String?>(
       context: context,
-      builder: (ctx) => ContentDialog(
-        title: Text('Agregar direccion', style: TextStyle(fontSize: 20, color: AppTheme.accentTextColor)),
-        content: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextBox(
-                    controller: controller,
-                    style: TextStyle(color: AppTheme.accentTextColor),
-                    cursorColor: AppTheme.accentTextColor,
-                    decoration: BoxDecoration(
-                      color: AppTheme.buttonBgColor
-                    ),
+      builder: (ctx) => Form(
+        key: formKey,
+        autovalidateMode: AutovalidateMode.always,
+        child: ContentDialog(
+          title: Text('Agregar direccion', style: TextStyle(fontSize: 20, color: AppTheme.accentTextColor)),
+          content: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextBox(
+                        controller: controller,
+                        style: TextStyle(color: AppTheme.accentTextColor),
+                        cursorColor: AppTheme.accentTextColor,
+                        decoration: BoxDecoration(
+                            color: AppTheme.buttonBgColor
+                        ),
+                        onSubmitted: (text) {
+                          if (text.isNotEmpty) {
+                            Navigator.pop(ctx, text);
+                          }
+                        },
+                      )
+                    ],
                   )
-                ],
               )
-            )
+            ],
+          ),
+          actions: [
+            Button(
+              child: const Text('Agregar'),
+              onPressed: () {
+                Navigator.pop(ctx, controller.text);
+                // Delete file here
+              },
+            ),
+            FilledButton(
+              child: const Text('Cancelar'),
+              onPressed: () => Navigator.pop(ctx, null),
+            ),
           ],
-        ),
-        actions: [
-          Button(
-            child: const Text('Agregar'),
-            onPressed: () {
-              Navigator.pop(context, controller.text);
-              // Delete file here
-            },
-          ),
-          FilledButton(
-            child: const Text('Cancelar'),
-            onPressed: () => Navigator.pop(context, null),
-          ),
-        ],
+        )
       )
     );
     return result;

@@ -20,7 +20,11 @@ class ContainerListProvider extends ChangeNotifier {
   loadData() async {
     loading = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) elements = await ContainerItemService(addressesProvider.usedAddress!).getList();
+    try {
+      if ( addressesProvider.usedAddress != null ) elements = await ContainerItemService(addressesProvider.usedAddress!).getList();
+    } catch (e) {
+      print(e);
+    }
     loading = false;
     notifyListeners();
   }
