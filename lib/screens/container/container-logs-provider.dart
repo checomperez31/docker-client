@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:docker_client/models/container_item_service.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -14,6 +16,7 @@ class ContainerLogsProvider extends ChangeNotifier {
   bool loading = false;
   List<Log> logList = [];
   String tail = '50';
+  ScrollController scroll = ScrollController();
 
   ContainerLogsProvider(this.addressesProvider, this.container) {
     logs();
@@ -39,6 +42,16 @@ class ContainerLogsProvider extends ChangeNotifier {
       }
       loading = false;
       notifyListeners();
+      _scrollToBottom();
+    }
+  }
+
+  _scrollToBottom() {
+    if (scroll.hasClients && scroll.position.maxScrollExtent > 0) {
+      scroll.animateTo(scroll.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300), curve: Curves.elasticOut);
+    } else {
+      Timer(const Duration(milliseconds: 400), () => _scrollToBottom());
     }
   }
 }

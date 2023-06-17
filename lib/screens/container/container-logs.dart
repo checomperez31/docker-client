@@ -1,6 +1,5 @@
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
-import 'package:docker_client/screens/container/container-list-provider.dart';
 import 'package:docker_client/screens/container/container-logs-provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
@@ -38,12 +37,14 @@ class ContainerLogs extends StatelessWidget {
                               provider.tail = '50';
                             }
                           },
+                          onSubmitted: (string) => provider.logs(),
                         ),
                       ),
                       Button(onPressed: provider.logs, child: const Icon(FluentIcons.sync))
                     ],
                   ),
                   SingleChildScrollView(
+                    controller: provider.scroll,
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [

@@ -3,6 +3,8 @@ import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 
+import 'direction-form.dart';
+
 class Directions extends StatelessWidget {
   const Directions({Key? key}) : super(key: key);
 
@@ -22,7 +24,7 @@ class Directions extends StatelessWidget {
                         children: [
                           Text('Listado de direcciones', style: TextStyle(color: AppTheme.accentTextColor, fontWeight: FontWeight.bold),),
                           Button(onPressed: () async {
-                            String? data = await showAddAddress(context);
+                            String? data = await DirectionForm.asDialog(context);
                             provider.add( data );
                           }, child: const Text('Agregar'))
                         ],
@@ -73,60 +75,5 @@ class Directions extends StatelessWidget {
           ),
         )
     );
-  }
-
-
-  Future<String?> showAddAddress(BuildContext context) async {
-    TextEditingController controller = TextEditingController();
-    final formKey = GlobalKey<FormState>();
-    final result = showDialog<String?>(
-      context: context,
-      builder: (ctx) => Form(
-        key: formKey,
-        autovalidateMode: AutovalidateMode.always,
-        child: ContentDialog(
-          title: Text('Agregar direccion', style: TextStyle(fontSize: 20, color: AppTheme.accentTextColor)),
-          content: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextBox(
-                        controller: controller,
-                        style: TextStyle(color: AppTheme.accentTextColor),
-                        cursorColor: AppTheme.accentTextColor,
-                        decoration: BoxDecoration(
-                            color: AppTheme.buttonBgColor
-                        ),
-                        onSubmitted: (text) {
-                          if (text.isNotEmpty) {
-                            Navigator.pop(ctx, text);
-                          }
-                        },
-                      )
-                    ],
-                  )
-              )
-            ],
-          ),
-          actions: [
-            Button(
-              child: const Text('Agregar'),
-              onPressed: () {
-                Navigator.pop(ctx, controller.text);
-                // Delete file here
-              },
-            ),
-            FilledButton(
-              child: const Text('Cancelar'),
-              onPressed: () => Navigator.pop(ctx, null),
-            ),
-          ],
-        )
-      )
-    );
-    return result;
   }
 }

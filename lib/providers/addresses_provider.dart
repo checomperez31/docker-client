@@ -1,4 +1,5 @@
 import 'package:docker_client/preferences/preferences.dart';
+import 'package:docker_client/services/docker.service.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class AddressesProvider extends ChangeNotifier {
@@ -17,8 +18,9 @@ class AddressesProvider extends ChangeNotifier {
         data = '$data:2375';
       }
       addresses.add( data );
+      DockerService( data ).systemInfo();
+      Preferences.list = addresses;
     }
-    Preferences.list = addresses;
     notifyListeners();
   }
 
