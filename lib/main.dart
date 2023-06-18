@@ -1,5 +1,6 @@
 import 'package:docker_client/preferences/preferences.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
+import 'package:docker_client/providers/containers_provider.dart';
 import 'package:docker_client/screens/home-screen.dart';
 import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
       themeMode: appTheme.mode,
       home: MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => AddressesProvider())
+          ChangeNotifierProvider(create: (context) => AddressesProvider()),
+          ChangeNotifierProvider(create: (context) => ContainersProvider()),
         ],
         child: const HomeScreen(),
       ),

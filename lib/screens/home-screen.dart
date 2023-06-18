@@ -6,6 +6,7 @@ import 'package:docker_client/screens/directions/directions.dart';
 import 'package:docker_client/screens/image/image-list.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:styled_widget/styled_widget.dart';
 import 'package:window_manager/window_manager.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
               Text('${options[index].title} ${provider.usedAddress ?? ''}'),
               if ( provider.usedAddress != null ) ComboBox(
                 value: provider.usedAddress,
-                items: provider.addresses.map((e) => ComboBoxItem(value: e, child: Text(e, style: TextStyle(color: Colors.black),))).toList(),
+                items: provider.addresses.map((e) => ComboBoxItem(value: e, child: Text(e, style: const TextStyle(color: Colors.black),))).toList(),
                 onChanged: (option) {
                   if ( option != null ) {
                     provider.use( option );
@@ -50,26 +51,26 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
           automaticallyImplyLeading: false,
         ),
         pane: NavigationPane(
-          selected: index,
-          displayMode: PaneDisplayMode.compact,
-          onChanged: (i) => setState(() => index = i),
-          items: [
-            PaneItem(
-              icon: Icon(options[0].icon),
-              title: Text(options[0].title),
-              body: ContainerHome(addressesProvider: provider),
-            ),
-            PaneItem(
-              icon: Icon(options[1].icon),
-              title: Text(options[1].title),
-              body: ImageList(addressesProvider: provider)
-            ),
-            PaneItem(
-              icon: Icon(options[2].icon),
-              title: Text(options[2].title),
-              body: Directions(),
-            )
-          ].cast<NavigationPaneItem>()
+            selected: index,
+            displayMode: PaneDisplayMode.compact,
+            onChanged: (i) => setState(() => index = i),
+            items: [
+              PaneItem(
+                icon: Icon(options[0].icon),
+                title: Text(options[0].title),
+                body: ContainerHome(addressesProvider: provider),
+              ),
+              PaneItem(
+                  icon: Icon(options[1].icon),
+                  title: Text(options[1].title),
+                  body: ImageList(addressesProvider: provider)
+              ),
+              PaneItem(
+                icon: Icon(options[2].icon),
+                title: Text(options[2].title),
+                body: Directions(),
+              )
+            ].cast<NavigationPaneItem>()
         ),
       )
     );

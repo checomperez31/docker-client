@@ -1,8 +1,8 @@
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/container/container-details.dart';
-import 'package:docker_client/screens/container/container-list-details.dart';
 import 'package:docker_client/screens/container/container-list.dart';
+import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ContainerHome extends StatefulWidget {
@@ -19,7 +19,22 @@ class _ContainerHomeState extends State<ContainerHome> {
 
   @override
   Widget build(BuildContext context) {
-    if ( _selected == null ) {
+    return TabView(
+        currentIndex: 0,
+        tabs: [
+          Tab(
+            text: Text('Listado', style: TextStyle(color: AppTheme.accentTextColor)),
+            body: ContainerList(
+                addressesProvider: widget.addressesProvider,
+                onSelect: (selected) {
+                  _selected = selected;
+                  setState(() {});
+                }
+            )
+          )
+        ]
+    );
+    /*if ( _selected == null ) {
       return ContainerList(addressesProvider: widget.addressesProvider, onSelect: (selected) {
         _selected = selected;
         setState(() {});
@@ -29,6 +44,6 @@ class _ContainerHomeState extends State<ContainerHome> {
       back: () => setState(() => _selected = null),
       entity: _selected!,
       addressesProvider: widget.addressesProvider
-    );
+    );*/
   }
 }
