@@ -4,6 +4,7 @@ import 'package:docker_client/providers/containers_provider.dart';
 import 'package:docker_client/screens/container/container-details.dart';
 import 'package:docker_client/screens/container/container-home.dart';
 import 'package:docker_client/screens/directions/directions.dart';
+import 'package:docker_client/screens/home-header.dart';
 import 'package:docker_client/screens/image/image-list.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/gestures.dart';
@@ -46,22 +47,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
                         NavigationView(
                           appBar: NavigationAppBar(
                             height: 40,
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('${options[index].title} ${addressProvider.usedAddress ?? ''}'),
-                                if ( addressProvider.usedAddress != null ) ComboBox(
-                                  value: addressProvider.usedAddress,
-                                  items: addressProvider.addresses.map((e) => ComboBoxItem(value: e, child: Text(e, style: const TextStyle(color: Colors.black),))).toList(),
-                                  onChanged: (option) {
-                                    if ( option != null ) {
-                                      addressProvider.use( option );
-                                    }
-                                  },
-                                ),
-                                /*if ( provider.usedAddress != null ) Text(provider.usedAddress!)*/
-                              ],
-                            ),
+                            title: HomeHeader(option: options[index].title),
                             automaticallyImplyLeading: false,
                           ),
                           pane: NavigationPane(
@@ -103,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    TextButton(child: Text(container.simplifiedName()), onPressed:() => provider.select( container )),
+                                    TextButton(child: Text(container.simplifiedName(), style: TextStyle(color: AppTheme.accentTextColor)), onPressed:() => provider.select( container )),
                                     IconButton(icon: Icon(FluentIcons.chrome_close, size: 8), onPressed: () => provider.remove( container ))
                                   ],
                                 ).backgroundColor(AppTheme.buttonBgColor)).toList(),
