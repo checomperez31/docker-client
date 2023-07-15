@@ -1,7 +1,7 @@
 import 'package:docker_client/models/menu_option.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/providers/containers_provider.dart';
-import 'package:docker_client/screens/container/container-details.dart';
+import 'package:docker_client/screens/container/details/container-details.dart';
 import 'package:docker_client/screens/container/container-home.dart';
 import 'package:docker_client/screens/directions/directions.dart';
 import 'package:docker_client/screens/home-header.dart';

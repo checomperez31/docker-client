@@ -1,9 +1,7 @@
-import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/providers/containers_provider.dart';
-import 'package:docker_client/screens/container/container-list-provider.dart';
-import 'package:docker_client/screens/container/container-logs.dart';
-import 'package:docker_client/theme.dart';
+import 'package:docker_client/screens/container/details/container-details-header.dart';
+import 'package:docker_client/screens/container/details/container-logs.dart';
 import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +21,7 @@ class ContainerDetails extends StatelessWidget {
                   children: [
                     Column(
                       children: [
+                        ContainerDetailsHeader(provider: provider),
                         Row(
                           children: [
                             IconButton(
@@ -31,8 +30,10 @@ class ContainerDetails extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Text(provider.selected!.simplifiedName(),
-                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor)),
+                                    Text(
+                                        provider.selected!.simplifiedName(),
+                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor, fontSize: 15)
+                                    ),
                                     const SizedBox(width: 3),
                                     GestureDetector(
                                       onTap: () {

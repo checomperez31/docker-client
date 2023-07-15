@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.standard,
         focusTheme: FocusThemeData(
-          glowFactor: is10footScreen() ? 1.0 : 0.0,
+          glowFactor: is10footScreen() ? 5.0 : 0.0,
         ),
         iconTheme: IconThemeData(
           color: AppTheme.textColor
@@ -134,7 +134,8 @@ class MyApp extends StatelessWidget {
           actionsDecoration: BoxDecoration(
               color: AppTheme.scaffoldColor,
               borderRadius: BorderRadius.circular(8)
-          )
+          ),
+          actionsPadding: EdgeInsets.fromLTRB(20, 0, 20, 20)
         ),
 
       ),

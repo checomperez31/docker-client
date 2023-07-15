@@ -16,46 +16,61 @@ class ContainerListActions extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        if ( entity.state == 'exited' || entity.state == 'running' ) Button(
-          onPressed: provider.loadingRestart ? null: () {
-            if (onSelect != null) {
-              onSelect!(entity);
-            }
-          },
-          child: const Icon(FluentIcons.backlog_list),
-        ),
-        if ( entity.state == 'exited' || entity.state == 'running' ) Button(
-          onPressed: provider.loadingRestart ? null: () {
-            provider.restart( entity.id! );
-          },
-          child: const Icon(FluentIcons.reset),
-        ),
-        if ( entity.state == 'running' ) Button(
-          onPressed: provider.loadingStop ? null: () {
-            confirm(context, '¿Está seguro de detener éste contenedor?').then((value) {
-              if (value == true) {
-                provider.stop( entity.id! );
+        if ( entity.state == 'exited' || entity.state == 'running' ) Tooltip(
+          message: 'Detalles del contenedor',
+          child: IconButton(
+            onPressed: provider.loadingRestart ? null: () {
+              if (onSelect != null) {
+                onSelect!(entity);
               }
-            });
-          },
-          child: const Icon(FluentIcons.stop),
+            },
+            icon: const Icon(FluentIcons.backlog_list),
+          ),
         ),
-        if ( entity.state == 'created' ) Button(
-          onPressed: provider.loadingStart ? null: () {
-            provider.start( entity.id! );
-          },
-          child: const Icon(FluentIcons.play),
+        if ( entity.state == 'exited' || entity.state == 'running' ) Tooltip(
+          message: 'Reiniciar contenedor',
+          child: IconButton(
+            onPressed: provider.loadingRestart ? null: () {
+              provider.restart( entity.id! );
+            },
+            icon: const Icon(FluentIcons.reset),
+          ),
         ),
-        if ( entity.state == 'exited' || entity.state == 'created' ) Button(
-          onPressed: provider.loadingKill ? null: () {
-            confirm(context, '¿Está seguro de eliminar éste contenedor?').then((value) {
-              if (value == true) {
-                provider.remove( entity.id! );
-              }
-            });
-          },
-          child: const Icon(FluentIcons.delete)
+        if ( entity.state == 'running' ) Tooltip(
+          message: 'Detener contenedor',
+          child: IconButton(
+            onPressed: provider.loadingStop ? null: () {
+              confirm(context, '¿Está seguro de detener éste contenedor?').then((value) {
+                if (value == true) {
+                  provider.stop( entity.id! );
+                }
+              });
+            },
+            icon: const Icon(FluentIcons.stop),
+          ),
         ),
+        if ( entity.state == 'created' ) Tooltip(
+          message: 'Iniciar contenedor',
+          child: IconButton(
+            onPressed: provider.loadingStart ? null: () {
+              provider.start( entity.id! );
+            },
+            icon: const Icon(FluentIcons.play),
+          ),
+        ),
+        if ( entity.state == 'exited' || entity.state == 'created' ) Tooltip(
+          message: 'Eliminar contenedor',
+          child: IconButton(
+            onPressed: provider.loadingKill ? null: () {
+              confirm(context, '¿Está seguro de eliminar éste contenedor?').then((value) {
+                if (value == true) {
+                  provider.remove( entity.id! );
+                }
+              });
+            },
+            icon: const Icon(FluentIcons.delete),
+          ),
+        )
       ],
     );
   }

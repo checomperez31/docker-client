@@ -1,6 +1,6 @@
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
-import 'package:docker_client/screens/container/container-logs-provider.dart';
+import 'package:docker_client/screens/container/details/container-logs-provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
