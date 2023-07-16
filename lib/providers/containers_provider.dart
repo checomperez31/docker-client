@@ -6,10 +6,13 @@ class ContainersProvider extends ChangeNotifier {
   ContainerItem? selected;
 
   add(ContainerItem data) {
-    if ( containers.where((element) => element.id == data.id).isEmpty ) {
+    int existing = containers.indexWhere((element) => element.id == data.id);
+    if ( existing < 0 ) {
       containers.add( data );
+      select( data );
+    } else if ( selected == null ) {
+      select( containers.elementAt( existing ) );
     }
-    notifyListeners();
   }
 
   select(ContainerItem selectedContainer) {

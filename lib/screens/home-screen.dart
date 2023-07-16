@@ -89,8 +89,8 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    TextButton(child: Text(container.simplifiedName(), style: TextStyle(color: AppTheme.accentTextColor)), onPressed:() => provider.select( container )),
-                                    IconButton(icon: Icon(FluentIcons.chrome_close, size: 8), onPressed: () => provider.remove( container ))
+                                    TextButton(child: Text(container.simplifiedName(), style: TextStyle(color: provider.selected == container ? systemAccentColor: AppTheme.accentTextColor)), onPressed:() => provider.select( container )),
+                                    if ( provider.selected != container ) IconButton(icon: Icon(FluentIcons.chrome_close, size: 8), onPressed: () => provider.remove( container ))
                                   ],
                                 ).backgroundColor(AppTheme.buttonBgColor)).toList(),
                               ),

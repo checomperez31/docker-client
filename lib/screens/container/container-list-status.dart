@@ -4,9 +4,11 @@ import 'package:docker_client/utils/format-utils.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ContainerListStatus extends StatelessWidget {
-  ContainerItem entity;
+  final ContainerItem entity;
+  final bool showTime;
+  final double statusSize;
 
-  ContainerListStatus({Key? key, required this.entity}) : super(key: key);
+  const ContainerListStatus({Key? key, required this.entity, this.showTime = true, this.statusSize = 12}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +19,14 @@ class ContainerListStatus extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if ( entity.state != null ) createBadge(),
-            if ( entity.created != null ) Row(
+            if ( entity.created != null && showTime ) Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Created ', style: style),
                 Text( FormatUtils.formatSeconds( entity.created ), style: style )
               ],
             ),
-            if ( entity.status != null ) Text(entity.status!, style: style),
+            if ( entity.status != null && showTime) Text(entity.status!, style: style),
           ]
       ),
     );
@@ -49,7 +51,7 @@ class ContainerListStatus extends StatelessWidget {
         borderRadius: BorderRadius.circular(3)
       ),
       padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: Text(entity.state!, style: TextStyle(color: text)),
+      child: Text(entity.state!.toUpperCase(), style: TextStyle(color: text, fontSize: statusSize)),
     );
   }
 }

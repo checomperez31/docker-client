@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
     final appTheme = AppTheme();
     return FluentApp(
       title: 'Docker client',
+      debugShowCheckedModeBanner: false,
       themeMode: appTheme.mode,
       home: MultiProvider(
         providers: [

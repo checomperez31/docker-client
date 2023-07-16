@@ -21,54 +21,8 @@ class ContainerDetails extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        ContainerDetailsHeader(provider: provider),
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () => provider.unselect(), icon: const Icon(FluentIcons.chevron_left)),
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                        provider.selected!.simplifiedName(),
-                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor, fontSize: 15)
-                                    ),
-                                    const SizedBox(width: 3),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Clipboard.setData(ClipboardData(text: provider.selected!.simplifiedId())).then((value) {
-                                          displayInfoBar(context, builder: (ctx, close) {
-                                            return const InfoBar(
-                                              title: Text('Se ha copiado al portapapeles'),
-                                              isIconVisible: false,
-                                              severity: InfoBarSeverity.info,
-                                            );
-                                          });
-                                        });
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Text(provider.selected!.simplifiedId(),
-                                              style: TextStyle(fontSize: 10, color: AppTheme.textColor)),
-                                          const SizedBox(width: 3),
-                                          const Icon(
-                                            FluentIcons.clipboard_list_add,
-                                            size: 10,
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                        ContainerLogs(
-                          entity: provider.selected!,
-                          addressesProvider: addressesProvider,
-                        ).expanded()
+                        const ContainerDetailsHeader(),
+                        const ContainerLogs().expanded()
                       ],
                     ).expanded()
                   ],

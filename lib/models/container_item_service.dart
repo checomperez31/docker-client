@@ -1,4 +1,5 @@
 import 'package:docker_client/models/container_item.dart';
+import 'package:docker_client/utils/format-utils.dart';
 import 'package:http/http.dart' as http;
 
 class ContainerItemService {
@@ -37,8 +38,18 @@ class ContainerItemService {
     await http.delete( uri );
   }
 
-  Future<String> logs(String id, String tail) async {
-    Uri uri = Uri.http(url, '/v1.24/containers/$id/logs', {'tail': tail, 'stdout': 'true', 'stderr': 'true', 'timestamps': 'true'});
+  Future<String> logs(String id, {String tail = '50', DateTime? since, DateTime? until}) async {
+    Map<String, dynamic> params = {'stdout': 'true', 'stderr': 'true', 'timestamps': 'true'};
+    if ( tail != null) params['tail'] = tail;
+    DateTime now = DateTime.now();
+    if ( since != null ) {
+      params['since'] = since.microsecondsSinceEpoch.toString();
+      print(params['since']);
+    }
+    if ( until != null ) {
+      params['until'] = until.toUtc().microsecondsSinceEpoch.toString();
+    }
+    Uri uri = Uri.http(url, '/v1.24/containers/$id/logs', params);
     print( uri );
     final res = await http.get( uri );
     return res.body;
