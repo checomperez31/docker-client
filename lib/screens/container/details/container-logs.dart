@@ -14,7 +14,7 @@ class ContainerLogs extends StatelessWidget {
     return Consumer<AddressesProvider>(
         builder: (ctx, addressesProvider, addressChild) => Consumer<ContainersProvider>(
             builder: (context, containersProvider, child) => ChangeNotifierProvider(
-              create: (_) => ContainerLogsProvider(addressesProvider, containersProvider),
+              create: (_) => ContainerLogsProvider( containersProvider ),
               child: Consumer<ContainerLogsProvider> (
                 builder: (__, provider, child) {
                   return Row(
@@ -27,24 +27,24 @@ class ContainerLogs extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              SizedBox(
-                                  width: 220,
-                                  child: DateTimePicker(
-                                    initialValue: provider.since,
-                                    onChange: (dt) {
-                                      provider.since = dt;
-                                    },
-                                  )
-                              ),
-                              SizedBox(
-                                  width: 220,
-                                  child: DateTimePicker(
-                                    initialValue: provider.until,
-                                    onChange: (dt) {
-                                      provider.until = dt;
-                                    },
-                                  )
-                              ),
+                              // SizedBox(
+                              //     width: 220,
+                              //     child: DateTimePicker(
+                              //       initialValue: provider.since,
+                              //       onChange: (dt) {
+                              //         provider.since = dt;
+                              //       },
+                              //     )
+                              // ),
+                              // SizedBox(
+                              //     width: 220,
+                              //     child: DateTimePicker(
+                              //       initialValue: provider.until,
+                              //       onChange: (dt) {
+                              //         provider.until = dt;
+                              //       },
+                              //     )
+                              // ),
                               SizedBox(
                                 width: 80,
                                 child: TextBox(
@@ -59,7 +59,10 @@ class ContainerLogs extends StatelessWidget {
                                   onSubmitted: (string) => provider.logs(),
                                 ),
                               ),
-                              Button(onPressed: () => provider.logs(), child: const Icon(FluentIcons.sync))
+                              Button(
+                                  onPressed: () => provider.logs(),
+                                  child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
+                              )
                             ],
                           ),
                           SingleChildScrollView(

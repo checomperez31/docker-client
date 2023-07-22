@@ -22,12 +22,13 @@ class ContainerDetailsHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(provider.selected!.simplifiedName(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    Text(provider.selected!.image!, style: TextStyle(fontSize: 13, color: AppTheme.secondaryTextColor))
+                    Text(provider.selected!.image!, style: TextStyle(fontSize: 13, color: AppTheme.secondaryTextColor)),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(provider.selected!.simplifiedPort(), style: TextStyle(fontSize: 10, color: AppTheme.textColor)),
                     GestureDetector(
                       onTap: () {
                         Clipboard.setData(ClipboardData(text: provider.selected!.simplifiedId())).then((value) {
@@ -59,7 +60,8 @@ class ContainerDetailsHeader extends StatelessWidget {
             ),
             Row(
               children: [
-                IconButton(onPressed: () => provider.unselect(), icon: Icon(FluentIcons.mini_contract_mirrored, size: 17, color: AppTheme.accentTextColor,)),
+                IconButton(onPressed: () => provider.unselect(), icon: Icon(FluentIcons.mini_contract_mirrored, size: 17, color: AppTheme.accentTextColor)),
+                IconButton(onPressed: () => provider.close(), icon: Icon(FluentIcons.chrome_close, size: 17, color: AppTheme.accentTextColor)),
               ],
             )
           ],

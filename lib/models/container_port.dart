@@ -34,4 +34,9 @@ class ContainerPort {
   static List<ContainerPort> listFromList(dynamic str) {
     return (str as List).map((e) => ContainerPort.fromMap( e )).toList();
   }
+
+  @override
+  String toString() {
+    return 'ContainerPort{ip: $ip, private: $private, public: $public, type: $type}';
+  }
 }

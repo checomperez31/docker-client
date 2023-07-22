@@ -25,6 +25,14 @@ class ContainersProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  close() {
+    if ( selected != null ) {
+      containers.remove( selected );
+      selected = null;
+      notifyListeners();
+    }
+  }
+
   remove(ContainerItem data) {
     if ( containers.where((element) => element.id == data.id).isNotEmpty ) {
       containers.remove( data );

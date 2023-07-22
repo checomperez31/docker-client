@@ -1,7 +1,7 @@
-import 'package:docker_client/models/container_item.dart';
-import 'package:docker_client/models/container_item_service.dart';
-import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:docker_client/models/container_item.dart';
+import 'package:docker_client/services/docker.service.dart';
+import 'package:docker_client/providers/addresses_provider.dart';
 
 class ContainerListProvider extends ChangeNotifier {
   AddressesProvider addressesProvider;
@@ -21,7 +21,7 @@ class ContainerListProvider extends ChangeNotifier {
     loading = true;
     notifyListeners();
     try {
-      if ( addressesProvider.usedAddress != null ) elements = await ContainerItemService(addressesProvider.usedAddress!).getList();
+      if ( addressesProvider.usedAddress != null ) elements = await DockerService(addressesProvider.usedAddress!).getContainerList();
     } catch (e) {
       print(e);
     }
@@ -32,7 +32,7 @@ class ContainerListProvider extends ChangeNotifier {
   restart(String id) async {
     loadingRestart = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await ContainerItemService(addressesProvider.usedAddress!).restart(id);
+    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).restartContainer(id);
     loadingRestart = false;
     await loadData();
   }
@@ -40,7 +40,7 @@ class ContainerListProvider extends ChangeNotifier {
   stop(String id) async {
     loadingStop = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await ContainerItemService(addressesProvider.usedAddress!).stop(id);
+    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).stopContainer(id);
     loadingStop = false;
     await loadData();
   }
@@ -48,7 +48,7 @@ class ContainerListProvider extends ChangeNotifier {
   remove(String id) async {
     loadingKill = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await ContainerItemService(addressesProvider.usedAddress!).remove(id);
+    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).removeContainer(id);
     loadingKill = false;
     await loadData();
   }
@@ -56,7 +56,7 @@ class ContainerListProvider extends ChangeNotifier {
   start(String id) async {
     loadingStart = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await ContainerItemService(addressesProvider.usedAddress!).start(id);
+    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).startContainer(id);
     loadingStart = false;
     await loadData();
   }

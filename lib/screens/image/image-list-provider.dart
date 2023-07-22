@@ -1,7 +1,9 @@
-import 'package:docker_client/models/image-item-service.dart';
+import 'package:docker_client/services/docker.service.dart';
+import 'package:docker_client/services/docker.service.dart';
+import 'package:docker_client/services/docker.service.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:docker_client/models/image-item.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
-import 'package:fluent_ui/fluent_ui.dart';
 
 class ImageListProvider extends ChangeNotifier {
   AddressesProvider addressesProvider;
@@ -18,7 +20,7 @@ class ImageListProvider extends ChangeNotifier {
   loadData() async {
     loading = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) elements = await ImageItemService(addressesProvider.usedAddress!).getList();
+    if ( addressesProvider.usedAddress != null ) elements = await DockerService(addressesProvider.usedAddress!).getImageList();
     loading = false;
     notifyListeners();
   }
@@ -26,7 +28,7 @@ class ImageListProvider extends ChangeNotifier {
   remove(String id) async {
     loadingDelete = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await ImageItemService(addressesProvider.usedAddress!).remove(id);
+    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).removeImage(id);
     loadingDelete = false;
     await loadData();
   }
@@ -34,7 +36,7 @@ class ImageListProvider extends ChangeNotifier {
   prune() async {
     loadingPrune = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await ImageItemService(addressesProvider.usedAddress!).prune(true);
+    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).pruneImages(true);
     loadingPrune = false;
     await loadData();
   }

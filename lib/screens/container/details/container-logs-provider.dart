@@ -1,9 +1,8 @@
 import 'dart:async';
 
+import 'package:docker_client/services/docker.service.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/providers/containers_provider.dart';
-import 'package:docker_client/models/container_item_service.dart';
 
 class Log {
   String? timestamp;
@@ -12,7 +11,6 @@ class Log {
 }
 
 class ContainerLogsProvider extends ChangeNotifier {
-  AddressesProvider addressesProvider;
   ContainersProvider containersProvider;
   bool loading = false;
   List<Log> logList = [];
@@ -21,7 +19,7 @@ class ContainerLogsProvider extends ChangeNotifier {
   DateTime? until;
   ScrollController scroll = ScrollController();
 
-  ContainerLogsProvider(this.addressesProvider, this.containersProvider) {
+  ContainerLogsProvider(this.containersProvider) {
     containersProvider.addListener(updateData);
     logs();
   }
@@ -35,13 +33,13 @@ class ContainerLogsProvider extends ChangeNotifier {
   Future<void> logs() async {
     loading = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) {
-      String logs =  await ContainerItemService(addressesProvider.usedAddress!).logs(containersProvider.selected!.id!, tail: tail, since: since, until: until);
+    if ( containersProvider.selected != null ) {
+      String logs =  await DockerService( containersProvider.selected!.address! ).containerLogs(containersProvider.selected!.id!, tail: tail, since: since, until: until);
       List<String> list = logs.split('\n').map((e) => e.length > 8? e.substring(8): e).toList();
       logList = list.map((e) {
         if (e.length >= 30 && e.substring(29, 30) == 'Z') {
           try {
-            return Log(timestamp: e.substring(1, 29), log: e.substring(30));
+            return Log(timestamp: e.substring(0, 29), log: e.substring(30));
           } catch(e) {
             print(e);
           }
