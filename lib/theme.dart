@@ -18,7 +18,7 @@ class AppTheme extends ChangeNotifier {
   }
 
   static Color get secondaryTextColor {
-    return const Color(0xFFCACACA);
+    return const Color(0xFFC6C6C6);
   }
 
   static Color get textColor {

@@ -1,6 +1,7 @@
 import 'package:docker_client/models/menu_option.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/providers/containers_provider.dart';
+import 'package:docker_client/screens/container/container-bottom-option.dart';
 import 'package:docker_client/screens/container/details/container-details.dart';
 import 'package:docker_client/screens/container/container-home.dart';
 import 'package:docker_client/screens/directions/directions.dart';
@@ -85,14 +86,10 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
                               physics: const AlwaysScrollableScrollPhysics(),
                               reverse: true,
                               child: Row(
-                                children: provider.containers.map((container) => Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    TextButton(child: Text(container.simplifiedName(), style: TextStyle(color: provider.selected == container ? systemAccentColor: AppTheme.accentTextColor)), onPressed:() => provider.select( container )),
-                                    if ( provider.selected != container ) IconButton(icon: Icon(FluentIcons.chrome_close, size: 8), onPressed: () => provider.remove( container ))
-                                  ],
-                                ).backgroundColor(AppTheme.buttonBgColor)).toList(),
+                                children: provider.containers.map((container) => ContainerBottomOption(
+                                  option: container,
+                                  provider: provider,
+                                )).toList(),
                               ),
                             ).expanded()
                         )
