@@ -34,73 +34,69 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddressesProvider>(
-      builder: (ctx, addressProvider, addressChild) {
-        return Consumer<ContainersProvider>(
-            builder: (context, provider, child) => Row(
+    return Consumer<ContainersProvider>(
+        builder: (context, provider, child) => Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
+                Stack(
                   children: [
-                    Stack(
-                      children: [
-                        NavigationView(
-                          appBar: NavigationAppBar(
-                            height: 40,
-                            title: HomeHeader(option: options[index].title),
-                            automaticallyImplyLeading: false,
-                          ),
-                          pane: NavigationPane(
-                              selected: index,
-                              displayMode: PaneDisplayMode.compact,
-                              onChanged: (i) => setState(() => index = i),
-                              items: [
-                                PaneItem(
-                                  icon: Icon(options[0].icon),
-                                  title: Text(options[0].title),
-                                  body: ContainerHome(addressesProvider: addressProvider),
-                                ),
-                                PaneItem(
-                                    icon: Icon(options[1].icon),
-                                    title: Text(options[1].title),
-                                    body: ImageList(addressesProvider: addressProvider)
-                                ),
-                                PaneItem(
-                                  icon: Icon(options[2].icon),
-                                  title: Text(options[2].title),
-                                  body: Directions(),
-                                )
-                              ].cast<NavigationPaneItem>()
-                          ),
-                        ),
-                        if ( provider.selected != null ) const ContainerDetails()
-                      ],
-                    ).expanded(),
-                    if ( provider.containers.isNotEmpty ) Row(
-                      children: [
-                        ScrollConfiguration(
-                            behavior: MyCustomScrollBehavior(),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              reverse: true,
-                              child: Row(
-                                children: provider.containers.map((container) => ContainerBottomOption(
-                                  option: container,
-                                  provider: provider,
-                                )).toList(),
-                              ),
-                            ).expanded()
-                        )
-                      ],
-                    ).backgroundColor(AppTheme.scaffoldColor)
+                    NavigationView(
+                      appBar: NavigationAppBar(
+                        height: 40,
+                        title: HomeHeader(option: options[index].title),
+                        automaticallyImplyLeading: false,
+                      ),
+                      pane: NavigationPane(
+                          selected: index,
+                          displayMode: PaneDisplayMode.compact,
+                          onChanged: (i) => setState(() => index = i),
+                          items: [
+                            PaneItem(
+                              icon: Icon(options[0].icon),
+                              title: Text(options[0].title),
+                              body: const ContainerHome(),
+                            ),
+                            PaneItem(
+                                icon: Icon(options[1].icon),
+                                title: Text(options[1].title),
+                                body: ImageList()
+                            ),
+                            PaneItem(
+                              icon: Icon(options[2].icon),
+                              title: Text(options[2].title),
+                              body: Directions(),
+                            )
+                          ].cast<NavigationPaneItem>()
+                      ),
+                    ),
+                    if ( provider.selected != null ) const ContainerDetails()
                   ],
-                ).expanded()
+                ).expanded(),
+                if ( provider.containers.isNotEmpty ) Row(
+                  children: [
+                    ScrollConfiguration(
+                        behavior: MyCustomScrollBehavior(),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          reverse: true,
+                          child: Row(
+                            children: provider.containers.map((container) => ContainerBottomOption(
+                              option: container,
+                              provider: provider,
+                            )).toList(),
+                          ),
+                        ).expanded()
+                    )
+                  ],
+                ).backgroundColor(AppTheme.scaffoldColor)
               ],
-            )
-        );
-      }
+            ).expanded()
+          ],
+        )
     );
   }
 

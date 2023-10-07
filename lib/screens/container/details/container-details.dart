@@ -4,7 +4,6 @@ import 'package:docker_client/screens/container/details/container-details-header
 import 'package:docker_client/screens/container/details/container-logs.dart';
 import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
