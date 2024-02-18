@@ -29,8 +29,20 @@ class ContainerList extends StatelessWidget {
                 builder: (context, provider, child) => Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
+                        Column(
+                          children: [
+                            TextBox(
+                              style: TextStyle(color: AppTheme.accentTextColor),
+                              cursorColor: AppTheme.accentTextColor,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.buttonBgColor
+                              ),
+                              onChanged: (query) => provider.setQuery(query),
+                            ),
+                          ],
+                        ).padding(right: 10).expanded(),
                         Button(
                             onPressed: addressProvider.usedAddress == null && !provider.loading? null: () {
                               provider.loadData();
@@ -38,7 +50,7 @@ class ContainerList extends StatelessWidget {
                             child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
                         )
                       ],
-                    ),
+                    ).padding(vertical: 4, horizontal: 3),
                     Table(
                       border: TableBorder(
                           horizontalInside: BorderSide(
@@ -47,7 +59,6 @@ class ContainerList extends StatelessWidget {
                               style: BorderStyle.solid
                           )
                       ),
-
                       children: [
                         TableRow(
                             children: [
@@ -84,9 +95,9 @@ class ContainerList extends StatelessWidget {
                             ]
                         )).toList()
                       ],
-                    )
+                    ).padding(top: 5)
                   ],
-                ).padding(horizontal: 5).expanded(),
+                ).padding(horizontal: 8, top: 5).expanded(),
               ),
             ),
           )
