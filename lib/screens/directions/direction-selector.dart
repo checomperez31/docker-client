@@ -29,6 +29,7 @@ class DirectionSelector extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: AppTheme.buttonBgColor
                       ),
+                      autofocus: true,
                       onChanged: (query) => provider.setQuery(query),
                     ),
                     ...provider.elements.map((e) => ListTile.selectable(

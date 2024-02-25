@@ -18,8 +18,13 @@ class DockerService {
   Future<List<ContainerItem>> getContainerList() async {
     Uri uri = Uri.http(url, '/$client/containers/json', {'all': 'true'});
     print( uri );
-    final res = await http.get( uri );
-    return ContainerItem.decodeListFromString(res.bodyBytes, address: url);
+    try {
+      final res = await http.get( uri );
+      return ContainerItem.decodeListFromString(res.bodyBytes, address: url);
+    } catch(e) {
+      print(e);
+      return [];
+    }
   }
 
   Future<void> restartContainer(String id) async {
@@ -70,9 +75,13 @@ class DockerService {
     };
     Uri uri = Uri.http(url, '/$client/images/json', params);
     print( uri );
-    final res = await http.get( uri );
-    print(res.body);
-    return ImageItem.decodeListFromString(res.bodyBytes);
+    try {
+      final res = await http.get( uri );
+      return ImageItem.decodeListFromString(res.bodyBytes);
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 
   Future<void> removeImage(String id) async {

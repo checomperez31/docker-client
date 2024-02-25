@@ -17,6 +17,7 @@ class ContainerListProvider extends ChangeNotifier {
 
   ContainerListProvider(this.addressesProvider) {
     loadData();
+    addressesProvider.addListener(loadData);
   }
 
     loadData() async {
@@ -24,8 +25,8 @@ class ContainerListProvider extends ChangeNotifier {
       notifyListeners();
       try {
         if ( addressesProvider.usedAddress != null ) {
-          elements = await DockerService(addressesProvider.usedAddress!).getContainerList();
-          totalElements = elements;
+          totalElements = await DockerService(addressesProvider.usedAddress!).getContainerList();
+          filterData();
         }
       } catch (e) {
         print(e);
@@ -69,6 +70,7 @@ class ContainerListProvider extends ChangeNotifier {
   @override
   void dispose() {
     disposed = true;
+    addressesProvider.removeListener(loadData);
     super.dispose();
   }
 
@@ -81,8 +83,12 @@ class ContainerListProvider extends ChangeNotifier {
 
   setQuery(String query) {
     this.query = query;
-    if ( this.query != null && this.query!.isNotEmpty ) {
-      elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(this.query!.toUpperCase())).toList();
+    filterData();
+  }
+
+  filterData() {
+    if ( query != null && query!.isNotEmpty ) {
+      elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(query!.toUpperCase())).toList();
     } else {
       elements = totalElements;
     }
