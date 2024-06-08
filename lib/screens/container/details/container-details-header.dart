@@ -28,7 +28,8 @@ class ContainerDetailsHeader extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(provider.selected!.simplifiedPort(), style: TextStyle(fontSize: 10, color: AppTheme.textColor)),
+                    if ( provider.selected!.address != null ) Text(provider.selected!.address!, style: TextStyle(fontSize: 12, color: AppTheme.secondaryTextColor)),
+                    Text(provider.selected!.simplifiedPort(), style: TextStyle(fontSize: 12, color: AppTheme.secondaryTextColor)),
                     GestureDetector(
                       onTap: () {
                         Clipboard.setData(ClipboardData(text: provider.selected!.simplifiedId())).then((value) {
@@ -44,7 +45,7 @@ class ContainerDetailsHeader extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(provider.selected!.simplifiedId(),
-                              style: TextStyle(fontSize: 10, color: AppTheme.textColor)),
+                              style: TextStyle(fontSize: 12, color: AppTheme.secondaryTextColor)),
                           const SizedBox(width: 3),
                           const Icon(
                             FluentIcons.clipboard_list_add,

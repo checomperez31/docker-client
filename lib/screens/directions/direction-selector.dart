@@ -2,6 +2,7 @@ import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/directions/direction-selector.provider.dart';
 import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -13,7 +14,7 @@ class DirectionSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContentDialog(
-      title: Text('Seleccionar direccion', style: TextStyle(fontSize: 19, color: AppTheme.accentTextColor)),
+      title: Text('Seleccionar dirección', style: TextStyle(fontSize: 19, color: AppTheme.accentTextColor)),
       content: SingleChildScrollView(
         child: ChangeNotifierProvider(
           create: (context) => DirectionSelectorProvider(addressesProvider),
@@ -23,17 +24,33 @@ class DirectionSelector extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    TextBox(
-                      style: TextStyle(color: AppTheme.accentTextColor),
-                      cursorColor: AppTheme.accentTextColor,
-                      decoration: BoxDecoration(
-                          color: AppTheme.buttonBgColor
-                      ),
-                      autofocus: true,
-                      onChanged: (query) => provider.setQuery(query),
+                    RawKeyboardListener(
+                        focusNode: FocusNode(),
+                        child: TextBox(
+                          style: TextStyle(color: AppTheme.accentTextColor),
+                          cursorColor: AppTheme.accentTextColor,
+                          decoration: BoxDecoration(
+                              color: AppTheme.buttonBgColor
+                          ),
+                          autofocus: true,
+                          onChanged: (query) => provider.setQuery(query),
+                          onSubmitted: (str) {
+                            String? address = provider.submitData();
+                            if (address != null) {
+                              addressesProvider.use(address);
+                            }
+                            Navigator.pop(context);
+                          },
+                        ),
+                      onKey: (event)  {
+                          if ( event.runtimeType == RawKeyDownEvent ) {
+                            provider.pressedKeyOnSearch(event.data.logicalKey.keyLabel, event.data.logicalKey.keyId);
+                          }
+                      },
                     ),
                     ...provider.elements.map((e) => ListTile.selectable(
                       title: Text(e),
+                      selected: e == provider.preselectedElement,
                       onPressed: () {
                         addressesProvider.use(e);
                         Navigator.pop(context);

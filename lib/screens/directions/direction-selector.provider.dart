@@ -8,6 +8,8 @@ class DirectionSelectorProvider extends ChangeNotifier {
   bool loading = false;
   List<String> elements = [];
   List<String> totalElements = [];
+  int? preselectedIndex;
+  String? preselectedElement;
 
   DirectionSelectorProvider(this.provider) {
     loadData();
@@ -47,5 +49,57 @@ class DirectionSelectorProvider extends ChangeNotifier {
       elements = totalElements;
     }
     notifyListeners();
+  }
+
+  pressedKeyOnSearch(String label, int value) {
+    print('${label}: ${value}');
+    switch(value) {
+      case 4294968068: //Up
+        updateIndexUp();
+        break;
+      case 4294968065: //Down
+        updateIndexDown();
+        break;
+      /*case 4294967309: //Submit
+        submitData();
+        break;*/
+    }
+    notifyListeners();
+  }
+
+  updateIndexUp() {
+    if (preselectedIndex == null) {
+      preselectedIndex = -1;
+      return;
+    }
+    if ( preselectedIndex! >= 1 ) {
+      preselectedIndex = preselectedIndex! - 1;
+      preselectedElement = elements[ preselectedIndex! ];
+    }
+  }
+
+  updateIndexDown() {
+    if (preselectedIndex == null) {
+      preselectedIndex = 0;
+      preselectedElement = elements[ preselectedIndex! ];
+      return;
+    }
+    if ( preselectedIndex! < (elements.length - 1) ) {
+      preselectedIndex = preselectedIndex! + 1;
+      preselectedElement = elements[ preselectedIndex! ];
+    }
+  }
+
+  String? submitData() {
+    if ( preselectedIndex == null ) {
+      if ( elements.isNotEmpty ) {
+        return elements[0];
+      }
+    } else {
+      if ( elements.isNotEmpty ) {
+        return elements[preselectedIndex!];
+      }
+    }
+    return null;
   }
 }
