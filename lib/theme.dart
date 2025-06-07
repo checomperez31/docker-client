@@ -5,6 +5,7 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 enum NavigationIndicators { sticky, end }
 
+//
 class AppTheme extends ChangeNotifier {
   AccentColor _color = systemAccentColor;
   AccentColor get color => _color;
@@ -30,11 +31,11 @@ class AppTheme extends ChangeNotifier {
   }
 
   static Color get scaffoldColor {
-    return const Color(0xff282A36);
+    return const Color(0xff0f1118);
   }
 
   static Color get scaffold2Color {
-    return const Color(0xff3A3D4C);
+    return const Color(0xff111827);
   }
 
   static Color get buttonBgColor {
