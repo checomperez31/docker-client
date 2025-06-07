@@ -4,6 +4,7 @@ import 'package:docker_client/screens/container/container-list-actions.dart';
 import 'package:docker_client/screens/container/container-list-details.dart';
 import 'package:docker_client/screens/container/container-list-provider.dart';
 import 'package:docker_client/screens/container/container-list-status.dart';
+import 'package:docker_client/screens/system/info-cards.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/theme.dart';
@@ -18,6 +19,124 @@ class ContainerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Column(
+          children: [
+            InfoCards(),
+            Container(
+              padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: const Color(0xff191A23)
+              ),
+              child: Consumer<AddressesProvider>(
+                builder: (actx, addressProvider, child) => ChangeNotifierProvider(
+                  create: (_) => ContainerListProvider(addressProvider),
+                  child: Consumer<ContainerListProvider>(
+                      builder: (context, provider, child) => Row(
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Column(
+                                    children: [
+                                      TextBox(
+                                        style: TextStyle(color: AppTheme.accentTextColor),
+                                        cursorColor: AppTheme.accentTextColor,
+                                        decoration: BoxDecoration(
+                                            color: AppTheme.buttonBgColor
+                                        ),
+                                        onChanged: (query) => provider.setQuery(query),
+                                      ),
+                                    ],
+                                  ).padding(right: 10).expanded(),
+                                  Button(
+                                      onPressed: addressProvider.usedAddress == null && !provider.loading? null: () {
+                                        provider.loadData();
+                                      },
+                                      child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
+                                  )
+                                ],
+                              ).padding(vertical: 4, horizontal: 3),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      SingleChildScrollView(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                                            child: Table(
+                                              border: TableBorder(
+                                                  horizontalInside: BorderSide(
+                                                      width: 1,
+                                                      color: AppTheme.textColor,
+                                                      style: BorderStyle.solid
+                                                  )
+                                              ),
+                                              children: [
+                                                TableRow(
+                                                    children: [
+                                                      TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
+                                                      TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
+                                                      TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
+                                                      TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
+                                                    ]
+                                                ),
+                                                ...provider.elements.map((e) => TableRow(
+                                                    children: [
+                                                      TableCell(
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                          child: ContainerListDetails(entity: e)
+                                                      ),
+                                                      TableCell(
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: e.ports?.map((e) => Text('${e.public} : ${e.private}', style: TextStyle(color: AppTheme.textColor),)).toList() ?? [],
+                                                          )
+                                                      ),
+                                                      TableCell(
+                                                          child: ContainerListStatus(entity: e)
+                                                      ),
+                                                      TableCell(
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                          child: ContainerListActions(
+                                                            entity: e,
+                                                            provider: provider,
+                                                            onSelect: onSelect,
+                                                          )
+                                                      )
+                                                    ]
+                                                )).toList()
+                                              ],
+                                            ).padding(top: 5),
+                                          )
+                                      ).expanded()
+                                    ],
+                                  ).expanded()
+                                ],
+                              ).expanded()
+                            ],
+                          ).expanded(),
+                        ],
+                      )
+                  ),
+                ),
+              ),
+            ).expanded()
+          ],
+        ).expanded()
+      ],
+    ).padding(horizontal: 30, vertical: 8);
+  }
+
+  Widget build2(BuildContext context) {
     return SingleChildScrollView(
       child: Row(
         mainAxisSize: MainAxisSize.max,

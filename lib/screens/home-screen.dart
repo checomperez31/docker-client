@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
                   children: [
                     NavigationView(
                       appBar: NavigationAppBar(
-                        height: 40,
+                        height: 60,
                         title: HomeHeader(option: options[index].title),
                         automaticallyImplyLeading: false,
                       ),
@@ -62,12 +62,12 @@ class _HomeScreenState extends State<HomeScreen> with WindowListener {
                             PaneItem(
                                 icon: Icon(options[1].icon),
                                 title: Text(options[1].title),
-                                body: ImageList()
+                                body: const ImageList()
                             ),
                             PaneItem(
                               icon: Icon(options[2].icon),
                               title: Text(options[2].title),
-                              body: Directions(),
+                              body: const Directions(),
                             )
                           ].cast<NavigationPaneItem>()
                       ),

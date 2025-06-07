@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/directions/direction-selector.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 class HomeHeader extends StatelessWidget {
   final String option;
@@ -13,7 +14,21 @@ class HomeHeader extends StatelessWidget {
       builder: (context, provider, child) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(option, style: TextStyle(color: AppTheme.accentTextColor, fontWeight: FontWeight.bold),),
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xff1F51C1)
+                ),
+                child: const Icon(FluentIcons.server_enviroment, color: Colors.white, size: 19),
+              ),
+              const SizedBox(width: 8),
+              Text('Docker Manager', style: TextStyle(color: AppTheme.accentTextColor, fontWeight: FontWeight.bold, fontSize: 17),),
+            ],
+          ),
           TextButton(child: Text(provider.usedAddress ?? 'Seleccionar direccion', style: TextStyle(color: AppTheme.accentTextColor)), onPressed: () => DirectionSelector.asDialog(context, provider)),
         ],
       )

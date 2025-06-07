@@ -88,7 +88,8 @@ class ContainerListProvider extends ChangeNotifier {
 
   filterData() {
     if ( query != null && query!.isNotEmpty ) {
-      elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(query!.toUpperCase())).toList();
+      elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(query!.toUpperCase())
+          || element.simplifiedPort().contains(query!)).toList();
     } else {
       elements = totalElements;
     }

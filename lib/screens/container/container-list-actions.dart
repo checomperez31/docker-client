@@ -27,7 +27,7 @@ class ContainerListActions extends StatelessWidget {
             icon: const Icon(FluentIcons.backlog_list),
           ),
         ),
-        if ( entity.state == 'exited' || entity.state == 'running' ) Tooltip(
+        if ( entity.state == 'running' ) Tooltip(
           message: 'Reiniciar contenedor',
           child: IconButton(
             onPressed: provider.loadingRestart ? null: () {
@@ -49,7 +49,7 @@ class ContainerListActions extends StatelessWidget {
             icon: const Icon(FluentIcons.stop),
           ),
         ),
-        if ( entity.state == 'created' ) Tooltip(
+        if ( entity.state == 'created' || entity.state == 'exited' ) Tooltip(
           message: 'Iniciar contenedor',
           child: IconButton(
             onPressed: provider.loadingStart ? null: () {

@@ -37,7 +37,7 @@ class ContainerListStatus extends StatelessWidget {
     Color text = Colors.white;
     switch( entity.state ) {
       case 'running': {
-        background = Colors.green;
+        background = const Color(0xFF0F9F44);
         break;
       }
       case 'created': {
@@ -51,7 +51,7 @@ class ContainerListStatus extends StatelessWidget {
         borderRadius: BorderRadius.circular(3)
       ),
       padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: Text(entity.state!.toUpperCase(), style: TextStyle(color: text, fontSize: statusSize)),
+      child: Text(entity.state!.uppercaseFirst(), style: TextStyle(color: text, fontSize: statusSize)),
     );
   }
 }

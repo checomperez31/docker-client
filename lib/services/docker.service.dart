@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/models/image-item.dart';
+import 'package:docker_client/models/system_info.dart';
 import 'package:http/http.dart' as http;
 
 class DockerService {
@@ -10,9 +13,10 @@ class DockerService {
     this.client = 'v1.24'
   });
 
-  systemInfo() async {
+  Future<SystemInfo> systemInfo() async {
     Uri uri = Uri.http(url, '/$client/info');
     final res = await http.get( uri );
+    return SystemInfo.fromJson( utf8.decode( res.bodyBytes ) );
   }
 
   Future<List<ContainerItem>> getContainerList() async {
