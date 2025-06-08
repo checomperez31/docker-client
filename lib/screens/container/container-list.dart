@@ -1,6 +1,7 @@
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/container/container-list-actions.dart';
+import 'package:docker_client/screens/container/container-list-dates.dart';
 import 'package:docker_client/screens/container/container-list-details.dart';
 import 'package:docker_client/screens/container/container-list-provider.dart';
 import 'package:docker_client/screens/container/container-list-status.dart';
@@ -9,7 +10,9 @@ import 'package:docker_client/theme.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/theme.dart';
+import 'package:docker_client/widgets/custom-badge.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -62,6 +65,7 @@ class ContainerList extends StatelessWidget {
                                   )
                                 ],
                               ).padding(vertical: 4, horizontal: 3),
+                              const SizedBox(height: 10),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -72,37 +76,47 @@ class ContainerList extends StatelessWidget {
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 8),
                                             child: Table(
-                                              border: TableBorder(
+                                              border: const TableBorder(
                                                   horizontalInside: BorderSide(
                                                       width: 1,
-                                                      color: AppTheme.textColor,
+                                                      color: Color(0xFF374151),
                                                       style: BorderStyle.solid
                                                   )
                                               ),
                                               children: [
-                                                TableRow(
+                                                const TableRow(
                                                     children: [
-                                                      TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
-                                                      TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
-                                                      TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
-                                                      TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
+                                                      TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
+                                                      TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
+                                                      TableCell(child: Text('Creación', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
+                                                      TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
+                                                      TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
                                                     ]
                                                 ),
                                                 ...provider.elements.map((e) => TableRow(
                                                     children: [
                                                       TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: ContainerListDetails(entity: e)
+                                                          child: ContainerListDetails(entity: e).padding(vertical: 10)
                                                       ),
                                                       TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: Column(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: e.ports?.map((e) => Text('${e.public} : ${e.private}', style: TextStyle(color: AppTheme.textColor),)).toList() ?? [],
+                                                            children: e.distinctPorts().map((e) => CustomBadge(
+                                                              text: e,
+                                                              background: const Color(0xFF1B2230),
+                                                              borderColor: const Color(0xFF364050),
+                                                            )).toList(),
                                                           )
                                                       ),
                                                       TableCell(
-                                                          child: ContainerListStatus(entity: e)
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                          child: ContainerListDates(entity: e)
+                                                      ),
+                                                      TableCell(
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                          child: ContainerListStatus(entity: e, showTime: false)
                                                       ),
                                                       TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -134,94 +148,5 @@ class ContainerList extends StatelessWidget {
         ).expanded()
       ],
     ).padding(horizontal: 30, vertical: 8);
-  }
-
-  Widget build2(BuildContext context) {
-    return SingleChildScrollView(
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Consumer<AddressesProvider>(
-            builder: (actx, addressProvider, child) => ChangeNotifierProvider(
-              create: (_) => ContainerListProvider(addressProvider),
-              child: Consumer<ContainerListProvider>(
-                builder: (context, provider, child) => Column(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Column(
-                          children: [
-                            TextBox(
-                              style: TextStyle(color: AppTheme.accentTextColor),
-                              cursorColor: AppTheme.accentTextColor,
-                              decoration: BoxDecoration(
-                                  color: AppTheme.buttonBgColor
-                              ),
-                              onChanged: (query) => provider.setQuery(query),
-                            ),
-                          ],
-                        ).padding(right: 10).expanded(),
-                        Button(
-                            onPressed: addressProvider.usedAddress == null && !provider.loading? null: () {
-                              provider.loadData();
-                            },
-                            child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
-                        )
-                      ],
-                    ).padding(vertical: 4, horizontal: 3),
-                    Table(
-                      border: TableBorder(
-                          horizontalInside: BorderSide(
-                              width: 1,
-                              color: AppTheme.textColor,
-                              style: BorderStyle.solid
-                          )
-                      ),
-                      children: [
-                        TableRow(
-                            children: [
-                              TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
-                              TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
-                              TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
-                              TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.accentTextColor))),
-                            ]
-                        ),
-                        ...provider.elements.map((e) => TableRow(
-                            children: [
-                              TableCell(
-                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                  child: ContainerListDetails(entity: e)
-                              ),
-                              TableCell(
-                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: e.ports?.map((e) => Text('${e.public} -> ${e.private}', style: TextStyle(color: AppTheme.textColor),)).toList() ?? [],
-                                  )
-                              ),
-                              TableCell(
-                                  child: ContainerListStatus(entity: e)
-                              ),
-                              TableCell(
-                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                  child: ContainerListActions(
-                                    entity: e,
-                                    provider: provider,
-                                    onSelect: onSelect,
-                                  )
-                              )
-                            ]
-                        )).toList()
-                      ],
-                    ).padding(top: 5)
-                  ],
-                ).padding(horizontal: 8, top: 5).expanded(),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
   }
 }

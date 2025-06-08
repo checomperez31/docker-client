@@ -7,6 +7,10 @@ class FormatUtils {
     return milliseconds != null ? DateTime.fromMillisecondsSinceEpoch( milliseconds ): null;
   }
 
+  static DateTime? dateFromMillisecondsUnix(int? milliseconds) {
+    return milliseconds != null ? DateTime.fromMillisecondsSinceEpoch( milliseconds * 1000 ): null;
+  }
+
   static String formatSeconds(int? secondsToString, {String? isNull}) {
     if ( secondsToString == null) return isNull ?? '';
     Duration dur = Duration(seconds: secondsToString);

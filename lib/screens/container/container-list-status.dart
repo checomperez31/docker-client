@@ -1,6 +1,7 @@
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/utils/format-utils.dart';
+import 'package:docker_client/widgets/custom-badge.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class ContainerListStatus extends StatelessWidget {
@@ -13,19 +14,14 @@ class ContainerListStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = TextStyle(fontSize: 12, color: AppTheme.textColor);
+    final dt = FormatUtils.dateFromMilliseconds( entity.created );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if ( entity.state != null ) createBadge(),
-            if ( entity.created != null && showTime ) Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Created ', style: style),
-                Text( FormatUtils.formatSeconds( entity.created ), style: style )
-              ],
-            ),
+            if ( entity.created != null && showTime && dt != null) Text( FormatUtils.formatDate(dt, 'dd/MM/yyyy HH:mm'), style: style ),
             if ( entity.status != null && showTime) Text(entity.status!, style: style),
           ]
       ),
@@ -45,13 +41,6 @@ class ContainerListStatus extends StatelessWidget {
         break;
       }
     }
-    return Container(
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(3)
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: Text(entity.state!.uppercaseFirst(), style: TextStyle(color: text, fontSize: statusSize)),
-    );
+    return CustomBadge(text: entity.state!.uppercaseFirst(), background: background, textColor: text);
   }
 }

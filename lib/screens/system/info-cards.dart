@@ -59,7 +59,7 @@ class InfoCards extends StatelessWidget {
                 ).expanded(),
                 const SizedBox(width: 15),
                 Card(
-                  backgroundColor: Color(0xFF0B835E),
+                  backgroundColor: const Color(0xFF0B835E),
                   child: SizedBox(
                     height: 85,
                     child: Column(

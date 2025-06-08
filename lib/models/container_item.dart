@@ -38,6 +38,16 @@ class ContainerItem {
         .where((element) => element != null).reduce((value, element) => (value!.isNotEmpty? '$value,': '') + element!)!: 'NA';
   }
 
+  List<String> distinctPorts() {
+    if ( ports == null ) return [];
+    List<String> portsToReturn = [];
+    for (var e in ports!) {
+      var data = '${e.public}:${e.private}';
+      if ( !portsToReturn.contains(data) ) portsToReturn.add( data );
+    }
+    return portsToReturn;
+  }
+
   factory ContainerItem.fromMap(Map<String, dynamic> json, {String? address}) => ContainerItem(
     id: json['Id'],
     names: json['Names'] != null?(json['Names'] as List).map((e) => e.toString()).toList(): [],
