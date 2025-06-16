@@ -38,12 +38,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_acrylic: ^1.0.0+2
   fluent_ui: ^4.4.0
-  http: ^0.13.5
+  http: ^1.4.0
   provider: ^6.0.4
   shared_preferences: ^2.1.0
   styled_widget: ^0.4.1
-  system_theme: ^2.0.0
-  window_manager: ^0.2.7
+  system_theme: ^3.1.2
+  window_manager: ^0.5.0
 
 dev_dependencies:
   flutter_test:
@@ -54,8 +54,8 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
-  msix: 3.10.1
+  flutter_lints: ^6.0.0
+  msix: 3.16.9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

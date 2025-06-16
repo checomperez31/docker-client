@@ -22,7 +22,7 @@ class ContainerBottomOption extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TextButton(
+          Button(
             style: ButtonStyle(
               padding: ButtonState.all(EdgeInsets.only(top: 4, bottom: 4, left: 10, right: provider.selected == option ? 10: 0))
             ),

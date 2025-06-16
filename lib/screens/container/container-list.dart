@@ -50,9 +50,9 @@ class ContainerList extends StatelessWidget {
                                       TextBox(
                                         style: TextStyle(color: AppTheme.accentTextColor),
                                         cursorColor: AppTheme.accentTextColor,
-                                        decoration: BoxDecoration(
+                                        decoration: WidgetStatePropertyAll(BoxDecoration(
                                             color: AppTheme.buttonBgColor
-                                        ),
+                                        )),
                                         onChanged: (query) => provider.setQuery(query),
                                       ),
                                     ],

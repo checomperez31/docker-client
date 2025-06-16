@@ -29,7 +29,7 @@ class HomeHeader extends StatelessWidget {
               Text('Docker Manager', style: TextStyle(color: AppTheme.accentTextColor, fontWeight: FontWeight.bold, fontSize: 17),),
             ],
           ),
-          TextButton(child: Text(provider.usedAddress ?? 'Seleccionar direccion', style: TextStyle(color: AppTheme.accentTextColor)), onPressed: () => DirectionSelector.asDialog(context, provider)),
+          Button(child: Text(provider.usedAddress ?? 'Seleccionar direccion', style: TextStyle(color: AppTheme.accentTextColor)), onPressed: () => DirectionSelector.asDialog(context, provider)),
         ],
       )
   );

@@ -29,9 +29,9 @@ class DirectionSelector extends StatelessWidget {
                         child: TextBox(
                           style: TextStyle(color: AppTheme.accentTextColor),
                           cursorColor: AppTheme.accentTextColor,
-                          decoration: BoxDecoration(
+                          decoration: WidgetStatePropertyAll(BoxDecoration(
                               color: AppTheme.buttonBgColor
-                          ),
+                          )),
                           autofocus: true,
                           onChanged: (query) => provider.setQuery(query),
                           onSubmitted: (str) {

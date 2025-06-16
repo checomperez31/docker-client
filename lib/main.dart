@@ -64,14 +64,13 @@ class MyApp extends StatelessWidget {
         accentColor: appTheme.color,
         visualDensity: VisualDensity.standard,
         focusTheme: FocusThemeData(
-          glowFactor: is10footScreen() ? 2.0 : 0.0,
+          glowFactor: is10footScreen(context) ? 2.0 : 0.0,
         ),
       ),
       darkTheme: FluentThemeData(
         accentColor: appTheme.color,
         scaffoldBackgroundColor: AppTheme.scaffoldColor,
         acrylicBackgroundColor: Colors.green,
-        uncheckedColor: Colors.orange,
         activeColor: Colors.purple,
         navigationPaneTheme: NavigationPaneThemeData(
           backgroundColor: AppTheme.scaffold2Color,
@@ -86,7 +85,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.standard,
         focusTheme: FocusThemeData(
-          glowFactor: is10footScreen() ? 5.0 : 0.0,
+          glowFactor: is10footScreen(context) ? 5.0 : 0.0,
         ),
         iconTheme: IconThemeData(color: AppTheme.textColor),
         buttonTheme: ButtonThemeData(

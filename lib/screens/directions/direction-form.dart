@@ -24,9 +24,9 @@ class DirectionForm extends StatelessWidget {
                   focusNode: fn,
                   style: TextStyle(color: AppTheme.accentTextColor),
                   cursorColor: AppTheme.accentTextColor,
-                  decoration: BoxDecoration(
+                  decoration: WidgetStatePropertyAll(BoxDecoration(
                       color: AppTheme.buttonBgColor
-                  ),
+                  )),
                   onSubmitted: (text) => validateForm(context, controller.text),
                 )
               ],
