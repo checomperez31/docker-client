@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/providers/containers_provider.dart';
 import 'package:docker_client/screens/container/details/container-logs-provider.dart';
-import 'package:docker_client/utils/datetime-picker.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class ContainerLogs extends StatelessWidget {

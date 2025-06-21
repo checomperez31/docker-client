@@ -7,12 +7,8 @@ import 'package:docker_client/screens/container/container-list-provider.dart';
 import 'package:docker_client/screens/container/container-list-status.dart';
 import 'package:docker_client/screens/system/info-cards.dart';
 import 'package:docker_client/theme.dart';
-import 'package:docker_client/theme.dart';
-import 'package:docker_client/theme.dart';
-import 'package:docker_client/theme.dart';
 import 'package:docker_client/widgets/custom-badge.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 

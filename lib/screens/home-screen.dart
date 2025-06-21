@@ -1,5 +1,4 @@
 import 'package:docker_client/models/menu_option.dart';
-import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/providers/containers_provider.dart';
 import 'package:docker_client/screens/container/container-bottom-option.dart';
 import 'package:docker_client/screens/container/details/container-details.dart';

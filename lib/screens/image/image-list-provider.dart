@@ -1,9 +1,7 @@
-import 'package:docker_client/services/docker.service.dart';
-import 'package:docker_client/services/docker.service.dart';
-import 'package:docker_client/services/docker.service.dart';
-import 'package:fluent_ui/fluent_ui.dart';
 import 'package:docker_client/models/image-item.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
+import 'package:docker_client/services/docker.service.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 class ImageListProvider extends ChangeNotifier {
   AddressesProvider addressesProvider;

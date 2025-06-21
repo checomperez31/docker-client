@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/directions/direction-selector.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 class HomeHeader extends StatelessWidget {
   final String option;

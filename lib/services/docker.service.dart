@@ -57,7 +57,7 @@ class DockerService {
 
   Future<String> containerLogs(String id, {String tail = '50', DateTime? since, DateTime? until}) async {
     Map<String, dynamic> params = {'stdout': 'true', 'stderr': 'true', 'timestamps': 'true'};
-    if ( tail != null) params['tail'] = tail;
+    params['tail'] = tail;
     DateTime now = DateTime.now();
     if ( since != null ) {
       params['since'] = since.microsecondsSinceEpoch.toString();

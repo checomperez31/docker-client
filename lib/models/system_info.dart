@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:docker_client/models/container_port.dart';
-
 class SystemInfo {
   String? id;
   int? containers;
@@ -54,7 +52,7 @@ class SystemInfo {
     return (json.decode( str ) as List).map((e) => SystemInfo.fromMap( e, address: address )).toList();
   }
 
-  calculatedMemory() {
+  String calculatedMemory() {
     if (memory == null || memory == 0) return '0 bytes';
     double kb = memory! / 1024;
     if (kb < 1) return '${memory!.toStringAsFixed(2)} bytes';

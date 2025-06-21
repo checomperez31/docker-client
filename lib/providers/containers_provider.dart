@@ -5,7 +5,7 @@ class ContainersProvider extends ChangeNotifier {
   List<ContainerItem> containers = [];
   ContainerItem? selected;
 
-  add(ContainerItem data) {
+  void add(ContainerItem data) {
     int existing = containers.indexWhere((element) => element.id == data.id);
     if ( existing < 0 ) {
       containers.add( data );
@@ -15,17 +15,17 @@ class ContainersProvider extends ChangeNotifier {
     }
   }
 
-  select(ContainerItem selectedContainer) {
+  void select(ContainerItem selectedContainer) {
     selected = selectedContainer;
     notifyListeners();
   }
 
-  unselect() {
+  void unselect() {
     selected = null;
     notifyListeners();
   }
 
-  close() {
+  void close() {
     if ( selected != null ) {
       containers.remove( selected );
       selected = null;
@@ -33,7 +33,7 @@ class ContainersProvider extends ChangeNotifier {
     }
   }
 
-  remove(ContainerItem data) {
+  void remove(ContainerItem data) {
     if ( containers.where((element) => element.id == data.id).isNotEmpty ) {
       containers.remove( data );
     }
