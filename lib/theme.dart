@@ -39,11 +39,19 @@ class AppTheme extends ChangeNotifier {
   }
 
   static Color get buttonBgColor {
-    return const Color(0xff4A4D5C);
+    return const Color(0xff1C222E);
   }
 
   static Color get buttonBgHoveredColor {
-    return const Color(0xff505362);
+    return const Color(0xff374151);
+  }
+
+  static Color get buttonBorderColor {
+    return const Color(0xff343E4D);
+  }
+
+  static Color get buttonTextColor {
+    return const Color(0xffD1D5DB);
   }
 
   ThemeMode _mode = ThemeMode.dark;

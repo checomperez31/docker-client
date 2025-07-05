@@ -89,16 +89,25 @@ class MyApp extends StatelessWidget {
         ),
         iconTheme: IconThemeData(color: AppTheme.textColor),
         buttonTheme: ButtonThemeData(
-          defaultButtonStyle: ButtonStyle(backgroundColor: ButtonState.resolveWith((states) {
-            if (states.isHovering) return AppTheme.buttonBgHoveredColor;
-            return AppTheme.buttonBgColor;
-          }), textStyle: ButtonState.resolveWith((states) {
-            if (states.isHovering) return TextStyle(color: AppTheme.accentTextColor);
-            if (states.isDisabled) return TextStyle(color: AppTheme.disabledTextColor);
-            return TextStyle(color: AppTheme.textColor);
-          }), foregroundColor: ButtonState.resolveWith((states) {
-            return AppTheme.textColor;
-          })),
+          defaultButtonStyle: ButtonStyle(
+              backgroundColor: ButtonState.resolveWith((states) {
+                if (states.isHovering) return AppTheme.buttonBgHoveredColor;
+                return AppTheme.buttonBgColor;
+              }),
+              textStyle: ButtonState.resolveWith((states) {
+                if (states.isHovering) return TextStyle(color: AppTheme.accentTextColor);
+                if (states.isDisabled) return TextStyle(color: AppTheme.disabledTextColor);
+                return TextStyle(color: AppTheme.textColor);
+              }),
+              foregroundColor: WidgetStatePropertyAll(AppTheme.buttonTextColor),
+              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.all(Radius.circular(6)),
+                side: BorderSide(
+                  width: 1,
+                  color: AppTheme.buttonBorderColor
+                )
+              )) 
+          ),
         ),
         tooltipTheme: TooltipThemeData(textStyle: TextStyle(color: AppTheme.textColor), decoration: BoxDecoration(color: AppTheme.buttonBgColor, borderRadius: BorderRadius.circular(8))),
         typography: Typography.raw(
@@ -109,7 +118,8 @@ class MyApp extends StatelessWidget {
         dialogTheme: ContentDialogThemeData(
             decoration: BoxDecoration(color: AppTheme.scaffoldColor, borderRadius: BorderRadius.circular(8)),
             actionsDecoration: BoxDecoration(color: AppTheme.scaffoldColor, borderRadius: BorderRadius.circular(8)),
-            actionsPadding: EdgeInsets.fromLTRB(20, 0, 20, 20)),
+            actionsPadding: EdgeInsets.fromLTRB(20, 0, 20, 20)
+        ),
       ),
     );
   }

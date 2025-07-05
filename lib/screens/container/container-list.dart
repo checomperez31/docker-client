@@ -8,13 +8,15 @@ import 'package:docker_client/screens/container/container-list-status.dart';
 import 'package:docker_client/screens/system/info-cards.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/widgets/custom-badge.dart';
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:docker_client/widgets/custom-input.dart';
+import 'package:fluent_ui/fluent_ui.dart' hide Colors;
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class ContainerList extends StatelessWidget {
   final void Function(ContainerItem selected)? onSelect;
-  const ContainerList({Key? key, this.onSelect}) : super(key: key);
+  const ContainerList({super.key, this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +42,25 @@ class ContainerList extends StatelessWidget {
                             children: [
                               Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Column(
-                                    children: [
-                                      TextBox(
-                                        style: TextStyle(color: AppTheme.accentTextColor),
-                                        cursorColor: AppTheme.accentTextColor,
-                                        decoration: WidgetStatePropertyAll(BoxDecoration(
-                                            color: AppTheme.buttonBgColor
-                                        )),
-                                        onChanged: (query) => provider.setQuery(query),
-                                      ),
-                                    ],
-                                  ).padding(right: 10).expanded(),
-                                  Button(
-                                      onPressed: addressProvider.usedAddress == null && !provider.loading? null: () {
-                                        provider.loadData();
-                                      },
-                                      child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
+                                  SizedBox(
+                                    width: 180,
+                                    height: 40,
+                                    child: CustomInput(
+                                      onChanged: (query) => provider.setQuery(query),
+                                    )
+                                  ),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: Button(
+                                        onPressed: addressProvider.usedAddress == null && !provider.loading? null: () {
+                                          provider.loadData();
+                                        },
+                                        child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
+                                    ),
                                   )
                                 ],
                               ).padding(vertical: 4, horizontal: 3),
