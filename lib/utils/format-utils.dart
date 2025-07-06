@@ -58,4 +58,17 @@ class FormatUtils {
     int mb = (kb / 1024).round();
     return '$mb MB';
   }
+
+  static String formatBytesComplete(int? bytes, {String? isNull}) {
+    if (bytes == null || bytes == 0) return '0 bytes';
+    double kb = bytes / 1024;
+    if (kb < 1) return '${bytes.toStringAsFixed(2)} bytes';
+    double mb = kb / 1024;
+    if (mb < 1) return '${kb.toStringAsFixed(2)} KB';
+    double gb = mb / 1024;
+    if (gb < 1) return '${mb.toStringAsFixed(2)} MB';
+    double tb = gb / 1024;
+    if (tb < 1) return '${gb.toStringAsFixed(2)} GB';
+    return '${tb.toStringAsFixed(2)} TB';
+  }
 }

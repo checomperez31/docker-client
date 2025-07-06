@@ -1,20 +1,20 @@
 
 
-import 'package:docker_client/models/container.dart' show Container;
+import 'package:docker_client/models/container.dart' show DockerContainer;
 import 'package:docker_client/theme.dart' show AppTheme;
 import 'package:docker_client/utils/format-utils.dart' show FormatUtils;
 import 'package:docker_client/widgets/custom-card.dart' show CustomCard;
 import 'package:fluent_ui/fluent_ui.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, MainAxisAlignment, CrossAxisAlignment, TextStyle, Text, SizedBox, Column, Row;
 
 class ContainerInfoCard extends StatelessWidget {
-  final Container entity;
+  final DockerContainer entity;
   const ContainerInfoCard({super.key, required this.entity});
 
   @override
   Widget build(BuildContext context) {
     return CustomCard(
         padding: const EdgeInsets.all(15.0),
-        width: 400,
+        height: 280,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

@@ -11,7 +11,7 @@ import 'dart:convert';
 
 import 'dart:convert';
 
-class Container {
+class DockerContainer {
   String? id;
   DateTime? created;
   String? path;
@@ -36,7 +36,7 @@ class Container {
   Config? config;
   NetworkSettings? networkSettings;
 
-  Container({
+  DockerContainer({
     this.id,
     this.created,
     this.path,
@@ -62,11 +62,11 @@ class Container {
     this.networkSettings,
   });
 
-  factory Container.fromRawJson(String str) => Container.fromJson(json.decode(str));
+  factory DockerContainer.fromRawJson(String str) => DockerContainer.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Container.fromJson(Map<String, dynamic> json) => Container(
+  factory DockerContainer.fromJson(Map<String, dynamic> json) => DockerContainer(
     id: json["Id"],
     created: json["Created"] == null ? null : DateTime.parse(json["Created"]),
     path: json["Path"],
@@ -311,7 +311,7 @@ class HostConfig {
   String? containerIdFile;
   LogConfig? logConfig;
   String? networkMode;
-  Port? portBindings;
+  List<Port>? portBindings;
   RestartPolicy? restartPolicy;
   bool? autoRemove;
   String? volumeDriver;
@@ -446,7 +446,7 @@ class HostConfig {
     containerIdFile: json["ContainerIDFile"],
     logConfig: json["LogConfig"] == null ? null : LogConfig.fromJson(json["LogConfig"]),
     networkMode: json["NetworkMode"],
-    portBindings: json["PortBindings"] == null ? null : Port.fromJson(json["PortBindings"]),
+    portBindings: json["PortBindings"] == null ? null : Port.fromMap(json["PortBindings"]),
     restartPolicy: json["RestartPolicy"] == null ? null : RestartPolicy.fromJson(json["RestartPolicy"]),
     autoRemove: json["AutoRemove"],
     volumeDriver: json["VolumeDriver"],
@@ -512,7 +512,7 @@ class HostConfig {
     "ContainerIDFile": containerIdFile,
     "LogConfig": logConfig?.toJson(),
     "NetworkMode": networkMode,
-    "PortBindings": portBindings?.toJson(),
+    "PortBindings": portBindings.toString(),
     "RestartPolicy": restartPolicy?.toJson(),
     "AutoRemove": autoRemove,
     "VolumeDriver": volumeDriver,
@@ -599,10 +599,12 @@ class LogConfig {
 }
 
 class Port {
-  List<The8104Tcp>? the8104Tcp;
+  String? port;
+  List<PortMapping>? mappings;
 
   Port({
-    this.the8104Tcp,
+    this.port,
+    this.mappings
   });
 
   factory Port.fromRawJson(String str) => Port.fromJson(json.decode(str));
@@ -610,28 +612,37 @@ class Port {
   String toRawJson() => json.encode(toJson());
 
   factory Port.fromJson(Map<String, dynamic> json) => Port(
-    the8104Tcp: json["8104/tcp"] == null ? [] : List<The8104Tcp>.from(json["8104/tcp"]!.map((x) => The8104Tcp.fromJson(x))),
+    mappings: json["8104/tcp"] == null ? [] : List<PortMapping>.from(json["8104/tcp"]!.map((x) => PortMapping.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "8104/tcp": the8104Tcp == null ? [] : List<dynamic>.from(the8104Tcp!.map((x) => x.toJson())),
+    "port": port,
+    "mappings": mappings == null ? [] : List<dynamic>.from(mappings!.map((x) => x.toJson())),
   };
+
+  static List<Port> fromMap(Map<dynamic, dynamic> map) {
+    if (map == null) return [];
+    return map.keys.map((key) => Port(
+        port: key,
+        mappings: map[key] == null? null: List<PortMapping>.from(map[key]!.map((x) => PortMapping.fromJson(x))).toList()
+    )).toList();
+  }
 }
 
-class The8104Tcp {
+class PortMapping {
   String? hostIp;
   String? hostPort;
 
-  The8104Tcp({
+  PortMapping({
     this.hostIp,
     this.hostPort,
   });
 
-  factory The8104Tcp.fromRawJson(String str) => The8104Tcp.fromJson(json.decode(str));
+  factory PortMapping.fromRawJson(String str) => PortMapping.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory The8104Tcp.fromJson(Map<String, dynamic> json) => The8104Tcp(
+  factory PortMapping.fromJson(Map<String, dynamic> json) => PortMapping(
     hostIp: json["HostIp"],
     hostPort: json["HostPort"],
   );
@@ -670,7 +681,7 @@ class NetworkSettings {
   String? bridge;
   String? sandboxId;
   String? sandboxKey;
-  Port? ports;
+  List<Port>? ports;
   bool? hairpinMode;
   String? linkLocalIPv6Address;
   int? linkLocalIPv6PrefixLen;
@@ -715,7 +726,7 @@ class NetworkSettings {
     bridge: json["Bridge"],
     sandboxId: json["SandboxID"],
     sandboxKey: json["SandboxKey"],
-    ports: json["Ports"] == null ? null : Port.fromJson(json["Ports"]),
+    ports: json["Ports"] == null ? null : Port.fromMap(json["Ports"]),
     hairpinMode: json["HairpinMode"],
     linkLocalIPv6Address: json["LinkLocalIPv6Address"],
     linkLocalIPv6PrefixLen: json["LinkLocalIPv6PrefixLen"],
@@ -736,7 +747,7 @@ class NetworkSettings {
     "Bridge": bridge,
     "SandboxID": sandboxId,
     "SandboxKey": sandboxKey,
-    "Ports": ports?.toJson(),
+    "Ports": ports?.toString(),
     "HairpinMode": hairpinMode,
     "LinkLocalIPv6Address": linkLocalIPv6Address,
     "LinkLocalIPv6PrefixLen": linkLocalIPv6PrefixLen,

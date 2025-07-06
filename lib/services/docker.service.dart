@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:docker_client/models/container-stats.dart';
 import 'package:docker_client/models/container.dart';
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/models/image-item.dart';
@@ -32,12 +33,24 @@ class DockerService {
     }
   }
 
-  Future<Container?> getContainerInfo(String id) async {
+  Future<DockerContainer?> getContainerInfo(String id) async {
     Uri uri = Uri.http(url, '/$client/containers/$id/json');
     print( uri );
     try {
       final res = await http.get( uri );
-      return Container.fromRawJson(utf8.decode( res.bodyBytes ));
+      return DockerContainer.fromRawJson(utf8.decode( res.bodyBytes ));
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<ContainerStats?> getContainerStats(String id) async {
+    Uri uri = Uri.http(url, '/$client/containers/$id/stats', {'stream': 'false'});
+    print( uri );
+    try {
+      final res = await http.get( uri );
+      return ContainerStats.fromRawJson(utf8.decode( res.bodyBytes ));
     } catch (e) {
       print(e);
       return null;
