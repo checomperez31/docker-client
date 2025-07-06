@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:docker_client/models/container.dart';
 import 'package:docker_client/models/container_item.dart';
 import 'package:docker_client/models/image-item.dart';
 import 'package:docker_client/models/system_info.dart';
@@ -31,6 +32,18 @@ class DockerService {
     }
   }
 
+  Future<Container?> getContainerInfo(String id) async {
+    Uri uri = Uri.http(url, '/$client/containers/$id/json');
+    print( uri );
+    try {
+      final res = await http.get( uri );
+      return Container.fromRawJson(utf8.decode( res.bodyBytes ));
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
   Future<void> restartContainer(String id) async {
     Uri uri = Uri.http(url, '/$client/containers/$id/restart');
     print( uri );
@@ -55,8 +68,8 @@ class DockerService {
     await http.delete( uri );
   }
 
-  Future<String> containerLogs(String id, {String tail = '50', DateTime? since, DateTime? until}) async {
-    Map<String, dynamic> params = {'stdout': 'true', 'stderr': 'true', 'timestamps': 'true'};
+  Future<String> containerLogs(String id, {String tail = '50', DateTime? since, DateTime? until, bool timestamps = false}) async {
+    Map<String, dynamic> params = {'stdout': 'true', 'stderr': 'true', 'timestamps': '$timestamps'};
     params['tail'] = tail;
     DateTime now = DateTime.now();
     if ( since != null ) {
@@ -67,7 +80,6 @@ class DockerService {
       params['until'] = until.toUtc().microsecondsSinceEpoch.toString();
     }
     Uri uri = Uri.http(url, '/$client/containers/$id/logs', params);
-    print( uri );
     final res = await http.get( uri );
     return res.body;
   }

@@ -120,6 +120,30 @@ class MyApp extends StatelessWidget {
             actionsDecoration: BoxDecoration(color: AppTheme.scaffoldColor, borderRadius: BorderRadius.circular(8)),
             actionsPadding: EdgeInsets.fromLTRB(20, 0, 20, 20)
         ),
+        checkboxTheme: CheckboxThemeData(
+          checkedDecoration: WidgetStateProperty.resolveWith((states) {
+            return BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+              border: Border.all(
+                color: states.isDisabled
+                    ? AppTheme.disabledTextColor
+                    : AppTheme.buttonBorderColor,
+              ),
+              color: AppTheme.blue,
+            );
+          }),
+          uncheckedDecoration: WidgetStateProperty.resolveWith((states) {
+            return BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+              border: Border.all(
+                color: states.isDisabled
+                    ? AppTheme.disabledTextColor
+                    : AppTheme.buttonBorderColor,
+              ),
+              color: states.isHovered ? AppTheme.buttonBgHoveredColor: AppTheme.buttonBgColor,
+            );
+          }),
+        )
       ),
     );
   }

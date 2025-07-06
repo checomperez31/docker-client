@@ -8,9 +8,10 @@ import 'package:docker_client/screens/container/container-list-status.dart';
 import 'package:docker_client/screens/system/info-cards.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/widgets/custom-badge.dart';
+import 'package:docker_client/widgets/custom-button.dart';
+import 'package:docker_client/widgets/custom-card.dart';
 import 'package:docker_client/widgets/custom-input.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -26,12 +27,8 @@ class ContainerList extends StatelessWidget {
         Column(
           children: [
             InfoCards(),
-            Container(
-              padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: const Color(0xff191A23)
-              ),
+            SizedBox(height: 10),
+            CustomCard(
               child: Consumer<AddressesProvider>(
                 builder: (actx, addressProvider, child) => ChangeNotifierProvider(
                   create: (_) => ContainerListProvider(addressProvider),
@@ -52,16 +49,12 @@ class ContainerList extends StatelessWidget {
                                     )
                                   ),
                                   const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 40,
-                                    height: 40,
-                                    child: Button(
-                                        onPressed: addressProvider.usedAddress == null && !provider.loading? null: () {
-                                          provider.loadData();
-                                        },
-                                        child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
-                                    ),
-                                  )
+                                  CustomButton(
+                                      onPressed: addressProvider.usedAddress == null && !provider.loading? null: () {
+                                        provider.loadData();
+                                      },
+                                      child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
+                                  ),
                                 ],
                               ).padding(vertical: 4, horizontal: 3),
                               const SizedBox(height: 10),
@@ -75,22 +68,22 @@ class ContainerList extends StatelessWidget {
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 8),
                                             child: Table(
-                                              border: const TableBorder(
+                                              border: TableBorder(
                                                   horizontalInside: BorderSide(
                                                       width: 1,
-                                                      color: Color(0xFF374151),
+                                                      color: AppTheme.tableBorderColor,
                                                       style: BorderStyle.solid
                                                   )
                                               ),
                                               children: [
-                                                const TableRow(
-                                                    children: [
-                                                      TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
-                                                      TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
-                                                      TableCell(child: Text('Creación', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
-                                                      TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
-                                                      TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9299A4)))),
-                                                    ]
+                                                TableRow(
+                                                  children: [
+                                                    TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                    TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                    TableCell(child: Text('Creación', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                    TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                    TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                  ]
                                                 ),
                                                 ...provider.elements.map((e) => TableRow(
                                                     children: [
@@ -126,9 +119,9 @@ class ContainerList extends StatelessWidget {
                                                           )
                                                       )
                                                     ]
-                                                )).toList()
+                                                ))
                                               ],
-                                            ).padding(top: 5),
+                                            ).padding(top: 5).backgroundColor(AppTheme.tableBgColor),
                                           )
                                       ).expanded()
                                     ],

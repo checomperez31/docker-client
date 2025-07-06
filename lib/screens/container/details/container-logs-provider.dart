@@ -13,6 +13,7 @@ class Log {
 class ContainerLogsProvider extends ChangeNotifier {
   ContainersProvider containersProvider;
   bool loading = false;
+  bool _timestamps = false;
   List<Log> logList = [];
   String tail = '50';
   DateTime? since;
@@ -34,7 +35,7 @@ class ContainerLogsProvider extends ChangeNotifier {
     loading = true;
     notifyListeners();
     if ( containersProvider.selected != null ) {
-      String logs =  await DockerService( containersProvider.selected!.address! ).containerLogs(containersProvider.selected!.id!, tail: tail, since: since, until: until);
+      String logs =  await DockerService( containersProvider.selected!.address! ).containerLogs(containersProvider.selected!.id!, tail: tail, since: since, until: until, timestamps: timestamps);
       List<String> list = logs.split('\n').map((e) => e.length > 8? e.substring(8): e).toList();
       logList = list.map((e) {
         if (e.length >= 30 && e.substring(29, 30) == 'Z') {
@@ -63,5 +64,12 @@ class ContainerLogsProvider extends ChangeNotifier {
 
   updateData() {
     logs();
+  }
+
+  bool get timestamps => _timestamps;
+
+  set timestamps(bool value) {
+    _timestamps = value;
+    notifyListeners();
   }
 }
