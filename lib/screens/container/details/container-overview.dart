@@ -1,4 +1,5 @@
 import 'package:docker_client/screens/container/details/overviewcards/container-cpu-card.dart';
+import 'package:docker_client/screens/container/details/overviewcards/container-health-card.dart';
 import 'package:docker_client/screens/container/details/overviewcards/container-info-card.dart';
 import 'package:docker_client/screens/container/details/container-overview-provider.dart' show ContainerOverviewProvider;
 import 'package:docker_client/screens/container/details/overviewcards/container-memory-card.dart';
@@ -54,7 +55,13 @@ class ContainerOverview extends StatelessWidget {
                                 SizedBox(width: 8),
                                 ContainerNetworkCard(entity: provider.entity!).expanded()
                               ],
-                            )
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                ContainerHealthCard(entity: provider.entity!).expanded(),
+                              ],
+                            ),
                           ],
                         ).expanded()
                       ],

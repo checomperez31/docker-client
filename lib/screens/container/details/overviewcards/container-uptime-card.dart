@@ -22,7 +22,9 @@ class ContainerUptimeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Tiempo de actividad', style: TextStyle(color: AppTheme.textColor)),
-              Text(FormatUtils.formatDate(entity.state!.startedAt!, 'dd/MM/yyyy HH:mm').toString(), style: TextStyle(color: Color(0XFF4ADE80), fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(FormatUtils.formatDate(entity.state!.running! ? entity.state!.startedAt!: entity.state!.finishedAt!, 'dd/MM/yyyy HH:mm').toString(),
+                  style: TextStyle(color: entity.state!.running! ? Color(0XFF4ADE80): Color(0XFFE81123), fontSize: 20, fontWeight: FontWeight.bold)
+              ),
               Text(entity.state!.status!.uppercaseFirst(), style: TextStyle(color: AppTheme.textColor))
             ],
           )
