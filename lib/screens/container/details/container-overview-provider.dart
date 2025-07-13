@@ -29,7 +29,6 @@ class ContainerOverviewProvider extends ChangeNotifier {
     notifyListeners();
     if ( containersProvider.selected != null ) {
       entity = await DockerService( containersProvider.selected!.address! ).getContainerInfo(containersProvider.selected!.id!);
-      print(entity.toString());
     }
     loading = false;
     notifyListeners();
@@ -40,7 +39,6 @@ class ContainerOverviewProvider extends ChangeNotifier {
     notifyListeners();
     if ( containersProvider.selected != null ) {
       entityStats = await DockerService( containersProvider.selected!.address! ).getContainerStats(containersProvider.selected!.id!);
-      print(entity.toString());
     }
     loading = false;
     notifyListeners();

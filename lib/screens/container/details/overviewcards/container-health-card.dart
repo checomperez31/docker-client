@@ -15,7 +15,7 @@ class ContainerHealthCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCard(
         padding: const EdgeInsets.all(15.0),
-        height: 400,
+        height: ( entity.state?.error != null && entity.state?.error != '' ) ? 400: 330,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -33,9 +33,9 @@ class ContainerHealthCard extends StatelessWidget {
                       children: [
                         Text('Reinicios', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
                         Text(entity.restartCount?.toString() ?? 'NA', style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
-                        SizedBox(height: 15),
-                        if ( entity.state?.error != null ) Text('Error', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
-                        if ( entity.state?.error != null ) Text(entity.state!.error!, style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
+                        if ( entity.state?.error != null && entity.state?.error != '' ) SizedBox(height: 15),
+                        if ( entity.state?.error != null && entity.state?.error != '' ) Text('Error', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                        if ( entity.state?.error != null && entity.state?.error != '' ) Text(entity.state!.error!, style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
                       ],
                     ).expanded(),
                   ],

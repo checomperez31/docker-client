@@ -26,7 +26,7 @@ class AppTheme extends ChangeNotifier {
   }
 
   static Color get disabledTextColor {
-    return const Color(0xFF5A616B);
+    return const Color(0xFF9AA1AB);
   }
 
   static Color get scaffoldColor {

@@ -1,7 +1,9 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:docker_client/models/container-create.dart';
+import 'package:docker_client/models/container.dart' show DockerContainer;
 import 'package:docker_client/models/container_item.dart';
-import 'package:docker_client/services/docker.service.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
+import 'package:docker_client/services/docker.service.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 class ContainerListProvider extends ChangeNotifier {
   AddressesProvider addressesProvider;
@@ -20,25 +22,25 @@ class ContainerListProvider extends ChangeNotifier {
     addressesProvider.addListener(loadData);
   }
 
-    loadData() async {
-      loading = true;
-      notifyListeners();
-      try {
-        if ( addressesProvider.usedAddress != null ) {
-          totalElements = await DockerService(addressesProvider.usedAddress!).getContainerList();
-          filterData();
-        }
-      } catch (e) {
-        print(e);
+  loadData() async {
+    loading = true;
+    notifyListeners();
+    try {
+      if (addressesProvider.usedAddress != null) {
+        totalElements = await DockerService(addressesProvider.usedAddress!).getContainerList();
+        filterData();
       }
-      loading = false;
-      notifyListeners();
+    } catch (e) {
+      print(e);
     }
+    loading = false;
+    notifyListeners();
+  }
 
   restart(String id) async {
     loadingRestart = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).restartContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).restartContainer(id);
     loadingRestart = false;
     await loadData();
   }
@@ -46,7 +48,7 @@ class ContainerListProvider extends ChangeNotifier {
   stop(String id) async {
     loadingStop = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).stopContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).stopContainer(id);
     loadingStop = false;
     await loadData();
   }
@@ -54,7 +56,7 @@ class ContainerListProvider extends ChangeNotifier {
   remove(String id) async {
     loadingKill = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).removeContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).removeContainer(id);
     loadingKill = false;
     await loadData();
   }
@@ -62,9 +64,37 @@ class ContainerListProvider extends ChangeNotifier {
   start(String id) async {
     loadingStart = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).startContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).startContainer(id);
     loadingStart = false;
     await loadData();
+  }
+
+  Future<DockerContainer?> details(String id) async {
+    loadingStart = true;
+    notifyListeners();
+    if (addressesProvider.usedAddress != null) {
+      var entityDet = await DockerService(addressesProvider.usedAddress!).getContainerInfo(id);
+      loadingStart = false;
+      notifyListeners();
+      return entityDet;
+    }
+    loadingStart = false;
+    notifyListeners();
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> create(DockerCreate entity) async {
+    loadingStart = true;
+    notifyListeners();
+    if (addressesProvider.usedAddress != null) {
+      var data = await DockerService(addressesProvider.usedAddress!).createContainer( entity );
+      loadingStart = false;
+      notifyListeners();
+      return data;
+    }
+    loadingStart = false;
+    notifyListeners();
+    return null;
   }
 
   @override
@@ -76,7 +106,7 @@ class ContainerListProvider extends ChangeNotifier {
 
   @override
   void notifyListeners() {
-    if ( !disposed ) {
+    if (!disposed) {
       super.notifyListeners();
     }
   }
@@ -87,9 +117,8 @@ class ContainerListProvider extends ChangeNotifier {
   }
 
   filterData() {
-    if ( query != null && query!.isNotEmpty ) {
-      elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(query!.toUpperCase())
-          || element.simplifiedPort().contains(query!)).toList();
+    if (query != null && query!.isNotEmpty) {
+      elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(query!.toUpperCase()) || element.simplifiedPort().contains(query!)).toList();
     } else {
       elements = totalElements;
     }

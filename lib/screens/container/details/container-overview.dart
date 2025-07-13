@@ -33,10 +33,17 @@ class ContainerOverview extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            CustomButton(
-                                onPressed: () => provider.updateData(),
-                                child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                CustomButton(
+                                    onPressed: () => provider.updateData(),
+                                    child: provider.loading ? const SizedBox(width: 14, height: 14, child: ProgressRing(strokeWidth: 2)):const Icon(FluentIcons.sync)
+                                )
+                              ],
                             ),
+                            SizedBox(height: 3),
                             Row(
                               children: [
                                 if ( provider.entity!.state != null ) ContainerCpuCard(entity: provider.entity!, stats: provider.entityStats).expanded(),
@@ -65,7 +72,7 @@ class ContainerOverview extends StatelessWidget {
                           ],
                         ).expanded()
                       ],
-                    ),
+                    ).padding(right: 10),
                   ): Row(
                     children: [
                       Text('Cargando informacion')

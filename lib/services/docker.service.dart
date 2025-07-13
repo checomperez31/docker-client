@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:docker_client/models/container-create.dart';
 import 'package:docker_client/models/container-stats.dart';
 import 'package:docker_client/models/container.dart';
 import 'package:docker_client/models/container_item.dart';
@@ -127,5 +128,15 @@ class DockerService {
     Uri uri = Uri.http(url, '/$client/images/prune', params);
     final res = await http.post( uri );
     print(res.body);
+  }
+
+  Future<dynamic> createContainer(DockerCreate entity) async {
+    final params = {
+      'name': entity.name!.startsWith('/')? entity.name!.substring(1):entity.name,
+    };
+    Uri uri = Uri.http(url, '/$client/containers/create', params);
+    var body = json.encode( entity.toJson() );
+    final res = await http.post( uri, body: body, headers: {'Content-Type': 'application/json'} );
+    if ( res.statusCode == 201 ) return json.decode(res.body);
   }
 }

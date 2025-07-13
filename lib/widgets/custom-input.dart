@@ -6,8 +6,10 @@ class CustomInput extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onFieldSubmitted;
   final TextInputType? keyboardType;
+  final String? hint;
+  final String? initialValue;
 
-  const CustomInput({super.key, this.onChanged, this.controller, this.onFieldSubmitted, this.keyboardType});
+  const CustomInput({super.key, this.onChanged, this.controller, this.onFieldSubmitted, this.keyboardType, this.hint, this.initialValue});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class CustomInput extends StatelessWidget {
           ),
           child: TextFormField(
             controller: controller,
+            initialValue: initialValue,
             onFieldSubmitted: onFieldSubmitted,
             style: TextStyle(color: AppTheme.accentTextColor),
             cursorColor: AppTheme.accentTextColor,
@@ -36,6 +39,10 @@ class CustomInput extends StatelessWidget {
               filled: true,
               hoverColor: AppTheme.buttonBgHoveredColor,
               border: OutlineInputBorder(),
+              hintStyle: TextStyle(color: AppTheme.disabledTextColor),
+              floatingLabelStyle: TextStyle(color: AppTheme.disabledTextColor),
+              hintText: hint,
+              labelText: hint
             ),
             onChanged: onChanged,
           ),
