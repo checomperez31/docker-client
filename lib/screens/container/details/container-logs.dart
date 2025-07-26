@@ -1,12 +1,11 @@
-import 'package:docker_client/theme.dart';
+import 'package:docker_client/providers/addresses_provider.dart';
+import 'package:docker_client/providers/containers_provider.dart';
+import 'package:docker_client/screens/container/details/container-logs-provider.dart';
 import 'package:docker_client/widgets/custom-button.dart';
 import 'package:docker_client/widgets/custom-card.dart';
 import 'package:docker_client/widgets/custom-input.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
-import 'package:docker_client/providers/addresses_provider.dart';
-import 'package:docker_client/providers/containers_provider.dart';
-import 'package:docker_client/screens/container/details/container-logs-provider.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class ContainerLogs extends StatelessWidget {

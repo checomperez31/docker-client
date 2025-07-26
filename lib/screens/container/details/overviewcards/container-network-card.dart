@@ -1,6 +1,5 @@
 import 'package:docker_client/models/container.dart' show DockerContainer;
 import 'package:docker_client/theme.dart' show AppTheme;
-import 'package:docker_client/utils/format-utils.dart' show FormatUtils;
 import 'package:docker_client/widgets/custom-card.dart' show CustomCard;
 import 'package:fluent_ui/fluent_ui.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, MainAxisAlignment, CrossAxisAlignment, TextStyle, Text, SizedBox, Column, Row, Container, SingleChildScrollView;
 import 'package:flutter/material.dart' show Icon, Icons;

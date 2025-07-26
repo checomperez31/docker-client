@@ -67,61 +67,70 @@ class ContainerList extends StatelessWidget {
                                       SingleChildScrollView(
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 8),
-                                            child: Table(
-                                              border: TableBorder(
-                                                  horizontalInside: BorderSide(
-                                                      width: 1,
-                                                      color: AppTheme.tableBorderColor,
-                                                      style: BorderStyle.solid
-                                                  )
-                                              ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                TableRow(
+                                                Column(
                                                   children: [
-                                                    TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
-                                                    TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
-                                                    TableCell(child: Text('Creación', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
-                                                    TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
-                                                    TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
-                                                  ]
-                                                ),
-                                                ...provider.elements.map((e) => TableRow(
-                                                    children: [
-                                                      TableCell(
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: ContainerListDetails(entity: e).padding(vertical: 10)
-                                                      ),
-                                                      TableCell(
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: e.distinctPorts().map((e) => CustomBadge(
-                                                              text: e,
-                                                              background: const Color(0xFF1B2230),
-                                                              borderColor: const Color(0xFF364050),
-                                                            )).toList(),
+                                                    Table(
+                                                      border: TableBorder(
+                                                          horizontalInside: BorderSide(
+                                                              width: 1,
+                                                              color: AppTheme.tableBorderColor,
+                                                              style: BorderStyle.solid
                                                           )
                                                       ),
-                                                      TableCell(
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: ContainerListDates(entity: e)
-                                                      ),
-                                                      TableCell(
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: ContainerListStatus(entity: e, showTime: false)
-                                                      ),
-                                                      TableCell(
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                                          child: ContainerListActions(
-                                                            entity: e,
-                                                            provider: provider,
-                                                            onSelect: onSelect,
-                                                          )
-                                                      )
-                                                    ]
-                                                ))
+                                                      children: [
+                                                        TableRow(
+                                                            children: [
+                                                              TableCell(child: Text('Detalles', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                              TableCell(child: Text('Puertos', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                              TableCell(child: Text('Creación', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                              TableCell(child: Text('Estado', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                              TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                                            ]
+                                                        ),
+                                                        ...provider.elements.map((e) => TableRow(
+                                                            children: [
+                                                              TableCell(
+                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: ContainerListDetails(entity: e).padding(vertical: 10)
+                                                              ),
+                                                              TableCell(
+                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: e.distinctPorts().map((e) => CustomBadge(
+                                                                      text: e,
+                                                                      background: const Color(0xFF1B2230),
+                                                                      borderColor: const Color(0xFF364050),
+                                                                    )).toList(),
+                                                                  )
+                                                              ),
+                                                              TableCell(
+                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: ContainerListDates(entity: e)
+                                                              ),
+                                                              TableCell(
+                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: ContainerListStatus(entity: e, showTime: false)
+                                                              ),
+                                                              TableCell(
+                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: ContainerListActions(
+                                                                    entity: e,
+                                                                    provider: provider,
+                                                                    onSelect: onSelect,
+                                                                  )
+                                                              )
+                                                            ]
+                                                        ))
+                                                      ],
+                                                    ).padding(top: 5).backgroundColor(AppTheme.tableBgColor),
+                                                  ],
+                                                ).expanded()
                                               ],
-                                            ).padding(top: 5).backgroundColor(AppTheme.tableBgColor),
+                                            )
                                           )
                                       ).expanded()
                                     ],

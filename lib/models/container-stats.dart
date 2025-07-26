@@ -1,17 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:docker_client/models/container_port.dart';
-
-// To parse this JSON data, do
-//
-//     final container = containerFromJson(jsonString);
-
-import 'dart:convert';
-
-import 'dart:convert';
-
-import 'dart:convert';
 
 class ContainerStats {
   String? name;
