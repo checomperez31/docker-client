@@ -5,11 +5,13 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 class ImageListProvider extends ChangeNotifier {
   AddressesProvider addressesProvider;
+  List<ImageItem> totalElements = [];
   List<ImageItem> elements = [];
   bool loading = false;
   bool loadingDelete = false;
   bool loadingPrune = false;
   bool disposed = false;
+  String? query;
 
   ImageListProvider(this.addressesProvider){
     loadData();
@@ -18,7 +20,10 @@ class ImageListProvider extends ChangeNotifier {
   loadData() async {
     loading = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) elements = await DockerService(addressesProvider.usedAddress!).getImageList();
+    if ( addressesProvider.usedAddress != null ) {
+      totalElements = await DockerService(addressesProvider.usedAddress!).getImageList();
+      filterData();
+    }
     loading = false;
     notifyListeners();
   }
@@ -50,5 +55,19 @@ class ImageListProvider extends ChangeNotifier {
     if ( !disposed ) {
       super.notifyListeners();
     }
+  }
+
+  setQuery(String query) {
+    this.query = query;
+    filterData();
+  }
+
+  filterData() {
+    if (query != null && query!.isNotEmpty) {
+      elements = totalElements.where((element) => element.simplifiedTag().toUpperCase().contains(query!.toUpperCase())).toList();
+    } else {
+      elements = totalElements;
+    }
+    notifyListeners();
   }
 }

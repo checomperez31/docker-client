@@ -8,7 +8,6 @@ class AddressesProvider extends ChangeNotifier {
 
   AddressesProvider() {
     addresses = Preferences.list.map((address) {
-      print(address);
       if (address.contains('{')) {
         return Address.fromRawJson(address);
       } else {

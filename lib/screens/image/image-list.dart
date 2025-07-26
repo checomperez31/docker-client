@@ -3,6 +3,7 @@ import 'package:docker_client/screens/image/image-list-actions.dart';
 import 'package:docker_client/screens/image/image-list-provider.dart';
 import 'package:docker_client/theme.dart';
 import 'package:docker_client/utils/format-utils.dart';
+import 'package:docker_client/widgets/custom-input.dart' show CustomInput;
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -25,6 +26,13 @@ class ImageList extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        SizedBox(
+                            width: 180,
+                            height: 40,
+                            child: CustomInput(
+                              onChanged: (query) => provider.setQuery(query),
+                            )
+                        ),
                         Tooltip(
                             message: 'Actualizar',
                             child: Button(
@@ -78,7 +86,7 @@ class ImageList extends StatelessWidget {
                               ),
                               TableCell(
                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                                  child: Text(FormatUtils.formatSeconds( e.created, isNull: 'NA' ), style: TextStyle(color: AppTheme.textColor),)
+                                  child: Text(e.simplifiedCreated(), style: TextStyle(color: AppTheme.textColor),)
                               ),
                               TableCell(
                                   child: Text(FormatUtils.formatBytes( e.size, isNull: 'NA' ), style: TextStyle(color: AppTheme.textColor),)

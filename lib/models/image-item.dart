@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:docker_client/utils/format-utils.dart' show FormatUtils;
+
 class ImageItem {
   String? id;
   String? parentId;
@@ -53,5 +55,10 @@ class ImageItem {
 
   static List<ImageItem> listFromString(String str) {
     return (json.decode( str ) as List).map((e) => ImageItem.fromMap( e )).toList();
+  }
+
+  simplifiedCreated() {
+    final dt = FormatUtils.dateFromMillisecondsUnix( created );
+    return dt != null ? FormatUtils.formatDate(dt, 'dd/MM/yyyy'): 'NA';
   }
 }
