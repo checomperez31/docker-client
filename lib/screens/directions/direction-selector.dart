@@ -1,3 +1,4 @@
+import 'package:docker_client/models/address.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:docker_client/screens/directions/direction-selector.provider.dart';
 import 'package:docker_client/theme.dart';
@@ -35,7 +36,7 @@ class DirectionSelector extends StatelessWidget {
                           autofocus: true,
                           onChanged: (query) => provider.setQuery(query),
                           onSubmitted: (str) {
-                            String? address = provider.submitData();
+                            Address? address = provider.submitData();
                             if (address != null) {
                               addressesProvider.use(address);
                             }
@@ -49,7 +50,13 @@ class DirectionSelector extends StatelessWidget {
                       },
                     ),
                     ...provider.elements.map((e) => ListTile.selectable(
-                      title: Text(e),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(e.name ?? 'Sin nombre', style: TextStyle(color: AppTheme.textColor)),
+                          Text(e.ip ?? 'Sin IP', style: TextStyle(color: AppTheme.accentTextColor))
+                        ],
+                      ),
                       selected: e == provider.preselectedElement,
                       onPressed: () {
                         addressesProvider.use(e);

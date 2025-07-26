@@ -7,6 +7,7 @@ class InfoCardsProvider extends ChangeNotifier {
   AddressesProvider addressesProvider;
   bool loading = false;
   SystemInfo? info;
+  bool disposed = false;
 
   InfoCardsProvider(this.addressesProvider) {
     loadData();
@@ -25,5 +26,18 @@ class InfoCardsProvider extends ChangeNotifier {
     }
     loading = false;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if ( !disposed ) {
+      super.notifyListeners();
+    }
   }
 }

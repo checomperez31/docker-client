@@ -1,3 +1,4 @@
+import 'package:docker_client/models/address.dart';
 import 'package:docker_client/providers/addresses_provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -6,10 +7,10 @@ class DirectionSelectorProvider extends ChangeNotifier {
   String? query;
   AddressesProvider provider;
   bool loading = false;
-  List<String> elements = [];
-  List<String> totalElements = [];
+  List<Address> elements = [];
+  List<Address> totalElements = [];
   int? preselectedIndex;
-  String? preselectedElement;
+  Address? preselectedElement;
 
   DirectionSelectorProvider(this.provider) {
     loadData();
@@ -44,7 +45,8 @@ class DirectionSelectorProvider extends ChangeNotifier {
   setQuery(String query) {
     this.query = query;
     if ( this.query != null && this.query!.isNotEmpty ) {
-      elements = totalElements.where((element) => element.toUpperCase().contains(this.query!.toUpperCase())).toList();
+      elements = totalElements.where((address) => (address.name != null && address.name!.toUpperCase().contains(this.query!.toUpperCase()))
+        || (address.ip != null && address.ip!.toUpperCase().contains(this.query!.toUpperCase()))).toList();
     } else {
       elements = totalElements;
     }
@@ -52,7 +54,6 @@ class DirectionSelectorProvider extends ChangeNotifier {
   }
 
   pressedKeyOnSearch(String label, int value) {
-    print('${label}: ${value}');
     switch(value) {
       case 4294968068: //Up
         updateIndexUp();
@@ -90,7 +91,7 @@ class DirectionSelectorProvider extends ChangeNotifier {
     }
   }
 
-  String? submitData() {
+  Address? submitData() {
     if ( preselectedIndex == null ) {
       if ( elements.isNotEmpty ) {
         return elements[0];

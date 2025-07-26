@@ -29,7 +29,7 @@ void main() async {
         TitleBarStyle.normal,
         windowButtonVisibility: true,
       );
-      await windowManager.setSize(const Size(755, 545));
+      await windowManager.setSize(const Size(810, 545));
       await windowManager.setMinimumSize(const Size(350, 400));
       await windowManager.center();
       await windowManager.show();

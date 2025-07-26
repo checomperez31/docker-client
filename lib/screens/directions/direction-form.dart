@@ -1,15 +1,20 @@
+import 'package:docker_client/models/address.dart';
 import 'package:docker_client/theme.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 class DirectionForm extends StatelessWidget {
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController ipController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final FocusNode fn = FocusNode();
-  DirectionForm({Key? key}) : super(key: key) ;
+  final Address address;
+  DirectionForm({super.key, required this.address}) ;
 
   @override
   Widget build(BuildContext context) {
     fn.requestFocus();
+    if ( address.ip != null ) ipController.text = address.ip!;
+    if ( address.name != null ) nameController.text = address.name!;
     return Form(
       child: ContentDialog(
         title: Text('Agregar direccion', style: TextStyle(fontSize: 19, color: AppTheme.accentTextColor)),
@@ -20,14 +25,29 @@ class DirectionForm extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextBox(
-                  controller: controller,
+                  controller: nameController,
                   focusNode: fn,
                   style: TextStyle(color: AppTheme.accentTextColor),
                   cursorColor: AppTheme.accentTextColor,
                   decoration: WidgetStatePropertyAll(BoxDecoration(
                       color: AppTheme.buttonBgColor
                   )),
-                  onSubmitted: (text) => validateForm(context, controller.text),
+                  placeholder: 'Nombre',
+                  placeholderStyle: TextStyle(color: Colors.white),
+                  onChanged: (text) => address.name = text,
+                  onSubmitted: (text) => validateForm(context),
+                ),
+                TextBox(
+                  controller: ipController,
+                  style: TextStyle(color: AppTheme.accentTextColor),
+                  cursorColor: AppTheme.accentTextColor,
+                  decoration: WidgetStatePropertyAll(BoxDecoration(
+                      color: AppTheme.buttonBgColor
+                  )),
+                  placeholder: 'IP',
+                  placeholderStyle: TextStyle(color: Colors.white),
+                  onChanged: (text) => address.ip = text,
+                  onSubmitted: (text) => validateForm(context),
                 )
               ],
             ).expanded()
@@ -36,7 +56,7 @@ class DirectionForm extends StatelessWidget {
         actions: [
           Button(
             child: const Text('Agregar'),
-            onPressed: () => validateForm(context, controller.text),
+            onPressed: () => validateForm(context),
           ),
           FilledButton(
             child: const Text('Cancelar'),
@@ -47,13 +67,13 @@ class DirectionForm extends StatelessWidget {
     );
   }
 
-  validateForm(BuildContext context, String? txt) {
-    if ( txt != null && txt.isNotEmpty ) {
-      Navigator.pop(context, txt);
+  validateForm(BuildContext context) {
+    if ( address.name != null && address.name!.isNotEmpty && address.ip != null && address.ip!.isNotEmpty ) {
+      Navigator.pop(context, address);
     } else {
       displayInfoBar(context, builder: (ctx, close) {
-        return const InfoBar(
-          title: Text('Debe insertar la direccion del servidor'),
+        return InfoBar(
+          title: address.ip == null ? Text('Debe insertar la direccion del servidor'): Text('Debe insertar el nombre del servidor'),
           isIconVisible: false,
           severity: InfoBarSeverity.info,
         );
@@ -61,10 +81,10 @@ class DirectionForm extends StatelessWidget {
     }
   }
 
-  static Future<String?> asDialog(BuildContext context) {
-    return showDialog<String?>(
+  static Future<Address?> asDialog(BuildContext context, Address? address) {
+    return showDialog<Address?>(
         context: context,
-        builder: (ctx) => DirectionForm()
+        builder: (ctx) => DirectionForm(address: address ?? Address(),)
     );
   }
 }
