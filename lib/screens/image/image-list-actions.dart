@@ -1,13 +1,15 @@
 import 'package:docker_client/models/image-item.dart';
 import 'package:docker_client/screens/image/image-list-provider.dart';
 import 'package:docker_client/theme.dart';
+import 'package:docker_client/widgets/custom-button.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 class ImageListActions extends StatelessWidget {
   final ImageItem entity;
   final ImageListProvider provider;
 
-  const ImageListActions({Key? key, required this.entity, required this.provider}) : super(key: key);
+  const ImageListActions({super.key, required this.entity, required this.provider});
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +17,20 @@ class ImageListActions extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        if ( entity.containers == null || entity.containers! <= 0 ) Button(
-            onPressed: provider.loadingDelete ? null: () {
-              confirm(context, '¿Está seguro de eliminar ésta imagen?').then((value) {
-                if (value == true) {
-                  provider.remove( entity.id! );
-                }
-              });
-            },
-            child: const Icon(FluentIcons.delete)
+        if ( entity.containers == null || entity.containers! <= 0 ) CustomButton(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 9),
+          size: 30,
+          onPressed: provider.loadingDelete ? null: () {
+            confirm(context, '¿Está seguro de eliminar ésta imagen?').then((value) {
+              if (value == true) {
+                provider.remove( entity.id! );
+              }
+            });
+          },
+          child: const Icon(FluentIcons.delete, size: 12)
         ),
       ],
-    );
+    ).padding(vertical: 3);
   }
 
   Future<bool?> confirm(BuildContext context, String message) async {

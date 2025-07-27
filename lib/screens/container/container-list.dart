@@ -74,11 +74,11 @@ class ContainerList extends StatelessWidget {
                                                   children: [
                                                     Table(
                                                       border: TableBorder(
-                                                          horizontalInside: BorderSide(
-                                                              width: 1,
-                                                              color: AppTheme.tableBorderColor,
-                                                              style: BorderStyle.solid
-                                                          )
+                                                        horizontalInside: BorderSide(
+                                                          width: 1,
+                                                          color: AppTheme.tableBorderColor,
+                                                          style: BorderStyle.solid
+                                                        )
                                                       ),
                                                       children: [
                                                         TableRow(
