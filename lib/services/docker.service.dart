@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:docker_client/models/container-create.dart';
 import 'package:docker_client/models/container-stats.dart';
 import 'package:docker_client/models/container.dart';
@@ -114,11 +113,15 @@ class DockerService {
     }
   }
 
-  Future<void> removeImage(String id) async {
+  Future<int> removeImage(String id) async {
     Uri uri = Uri.http(url, '/$client/images/$id');
     print( uri );
     final res = await http.delete( uri );
-    print(res.body);
+    if ( res.statusCode == 200 ) {
+      var response = json.decode(res.body);
+      return List<dynamic>.from(response.map((x) => x)).length;
+    }
+    throw Exception(res.body);
   }
 
   Future<void> pruneImages(bool onlyUntagged) async {

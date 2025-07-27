@@ -28,12 +28,22 @@ class ImageListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  remove(String id) async {
+  Future<String> remove(String id) async {
     loadingDelete = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).removeImage(id);
+    var deleted = 0;
+    if ( addressesProvider.usedAddress != null ) {
+      try {
+        deleted = await DockerService(addressesProvider.usedAddress!).removeImage(id);
+      } catch (e) {
+        loadingDelete = false;
+        loadData();
+        rethrow;
+      }
+    }
     loadingDelete = false;
-    await loadData();
+    loadData();
+    return 'Se han eliminado $deleted imagenes';
   }
 
   prune() async {
@@ -64,7 +74,9 @@ class ImageListProvider extends ChangeNotifier {
 
   filterData() {
     if (query != null && query!.isNotEmpty) {
-      elements = totalElements.where((element) => element.simplifiedTag().toUpperCase().contains(query!.toUpperCase())).toList();
+      elements = totalElements.where((element) => element.simplifiedTag().toUpperCase().contains(query!.toUpperCase())
+          || (element.id != null && element.id!.toUpperCase().contains(query!.toUpperCase()))
+      ).toList();
     } else {
       elements = totalElements;
     }

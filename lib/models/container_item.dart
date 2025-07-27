@@ -7,6 +7,7 @@ class ContainerItem {
   String? id;
   List<String>? names;
   String? image;
+  String? imageId;
   List<ContainerPort>? ports;
   int? created;
   String? state;
@@ -17,6 +18,7 @@ class ContainerItem {
     this.id,
     this.names,
     this.image,
+    this.imageId,
     this.ports,
     this.created,
     this.state,
@@ -52,6 +54,7 @@ class ContainerItem {
     id: json['Id'],
     names: json['Names'] != null?(json['Names'] as List).map((e) => e.toString()).toList(): [],
     image: json['Image'],
+    imageId: json['ImageID'],
     ports: json['Ports'] != null? ContainerPort.listFromList(json['Ports']): [],
     created: json['Created'],
     state: json['State'],
