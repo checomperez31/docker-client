@@ -57,8 +57,16 @@ class ImageItem {
     return (json.decode( str ) as List).map((e) => ImageItem.fromMap( e )).toList();
   }
 
-  simplifiedCreated() {
+  String simplifiedCreated() {
     final dt = FormatUtils.dateFromMillisecondsUnix( created );
     return dt != null ? FormatUtils.formatDate(dt, 'dd/MM/yyyy'): 'NA';
+  }
+
+  String simplifiedId() {
+    return (id != null && id!.length >= 12) ? id!.substring(7, 19): '';
+  }
+
+  String simplifiedParentId() {
+    return (parentId != null && parentId!.length >= 12) ? parentId!.substring(7, 19): '';
   }
 }

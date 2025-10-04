@@ -12,6 +12,7 @@ class ImageListProvider extends ChangeNotifier {
   bool loadingPrune = false;
   bool disposed = false;
   String? query;
+  String? parentQuery;
 
   ImageListProvider(this.addressesProvider){
     loadData();
@@ -67,15 +68,31 @@ class ImageListProvider extends ChangeNotifier {
     }
   }
 
-  setQuery(String query) {
-    this.query = query;
+  void setQuery(String q) {
+    query = q;
     filterData();
   }
 
-  filterData() {
+  void setParentQuery(String q) {
+    parentQuery = q;
+    filterParentData();
+  }
+
+  void filterData() {
     if (query != null && query!.isNotEmpty) {
       elements = totalElements.where((element) => element.simplifiedTag().toUpperCase().contains(query!.toUpperCase())
           || (element.id != null && element.id!.toUpperCase().contains(query!.toUpperCase()))
+      ).toList();
+    } else {
+      elements = totalElements;
+    }
+    notifyListeners();
+  }
+
+  void filterParentData() {
+    if (parentQuery != null && parentQuery!.isNotEmpty) {
+      elements = totalElements.where((element) => element.simplifiedTag().toUpperCase().contains(parentQuery!.toUpperCase())
+          || (element.parentId != null && element.parentId!.toUpperCase().contains(parentQuery!.toUpperCase()))
       ).toList();
     } else {
       elements = totalElements;

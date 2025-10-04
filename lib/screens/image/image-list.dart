@@ -36,7 +36,17 @@ class ImageList extends StatelessWidget {
                                       width: 180,
                                       height: 40,
                                       child: CustomInput(
+                                        hint: 'Filtrar',
                                         onChanged: (query) => provider.setQuery(query),
+                                      )
+                                  ),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                      width: 180,
+                                      height: 40,
+                                      child: CustomInput(
+                                        hint: 'ParentId',
+                                        onChanged: (query) => provider.setParentQuery(query),
                                       )
                                   ),
                                   const SizedBox(width: 10),
@@ -77,14 +87,21 @@ class ImageList extends StatelessWidget {
                                     children: [
                                       TableRow(
                                           children: [
+                                            TableCell(child: Text('ID', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
                                             TableCell(child: Text('Tags', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
                                             TableCell(child: Text('Created', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
                                             TableCell(child: Text('Size', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                            TableCell(child: Text('Parent', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
+                                            TableCell(child: Text('Digest', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
                                             TableCell(child: Text('', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.tableHeaderColor))),
                                           ]
                                       ),
                                       ...provider.elements.map((e) => TableRow(
                                         children: [
+                                          TableCell(
+                                              verticalAlignment: TableCellVerticalAlignment.middle,
+                                              child: SelectableText(e.simplifiedId(), style: TextStyle(color: AppTheme.textColor),)
+                                          ),
                                           TableCell(
                                             verticalAlignment: TableCellVerticalAlignment.middle,
                                             child: Column(
@@ -102,6 +119,14 @@ class ImageList extends StatelessWidget {
                                           TableCell(
                                             verticalAlignment: TableCellVerticalAlignment.middle,
                                             child: Text(FormatUtils.formatBytes( e.size, isNull: 'NA' ), style: TextStyle(color: AppTheme.textColor),)
+                                          ),
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            child: SelectableText(e.simplifiedParentId(), style: TextStyle(color: AppTheme.textColor),)
+                                          ),
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            child: SelectableText((e.digest?.length ?? 0).toString(), style: TextStyle(color: AppTheme.textColor),)
                                           ),
                                           TableCell(
                                             verticalAlignment: TableCellVerticalAlignment.middle,
