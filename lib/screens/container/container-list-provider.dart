@@ -128,6 +128,7 @@ class ContainerListProvider extends ChangeNotifier {
           || element.simplifiedPort().contains(query!)
           || (element.image != null && element.image!.contains(query!))
           || (element.imageId != null && element.imageId!.contains(query!))
+          || (element.id != null && element.id!.contains(query!))
       ).toList();
     } else {
       elements = totalElements;
