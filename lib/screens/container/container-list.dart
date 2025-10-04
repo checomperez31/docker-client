@@ -42,10 +42,20 @@ class ContainerList extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   SizedBox(
-                                    width: 180,
+                                    width: 190,
                                     height: 40,
                                     child: CustomInput(
+                                      hint: 'Buscar',
                                       onChanged: (query) => provider.setQuery(query),
+                                    )
+                                  ),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: 100,
+                                    height: 40,
+                                    child: CustomInput(
+                                      hint: 'Puerto',
+                                      onChanged: (query) => provider.setPortQuery(query),
                                     )
                                   ),
                                   const SizedBox(width: 10),

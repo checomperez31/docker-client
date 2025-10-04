@@ -17,7 +17,7 @@ class CustomTextRow extends StatelessWidget {
         children: [
           Icon(icon, size: 16, color: AppTheme.blue),
           SizedBox(width: 6),
-          Text(text ?? '', style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16), overflow: TextOverflow.visible).expanded()
+          SelectableText(text ?? '', style: TextStyle(color: AppTheme.accentTextColor, fontSize: 14)).expanded()
         ],
       ),
     );

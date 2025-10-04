@@ -36,10 +36,17 @@ class ContainerHealthCard extends StatelessWidget {
                         if ( entity.state?.error != null && entity.state?.error != '' ) Text(entity.state!.error!, style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
                       ],
                     ).expanded(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Politica de reinicios', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                        Text(entity.hostConfig?.restartPolicy?.name ?? 'NA', style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
+                      ],
+                    ).expanded(),
                   ],
                 ),
                 SizedBox(height: 15),
-                Text('Comando', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                Text('Paths', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
                 CustomTextRow(icon: Icons.terminal, text: entity.resolvConfPath),
                 SizedBox(height: 2),
                 CustomTextRow(icon: Icons.terminal, text: entity.hostnamePath),

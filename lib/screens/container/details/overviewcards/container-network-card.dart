@@ -1,6 +1,7 @@
 import 'package:docker_client/models/container.dart' show DockerContainer;
 import 'package:docker_client/theme.dart' show AppTheme;
 import 'package:docker_client/widgets/custom-card.dart' show CustomCard;
+import 'package:docker_client/widgets/custom-text-row.dart' show CustomTextRow;
 import 'package:fluent_ui/fluent_ui.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, MainAxisAlignment, CrossAxisAlignment, TextStyle, Text, SizedBox, Column, Row, Container, SingleChildScrollView;
 import 'package:flutter/material.dart' show Icon, Icons;
 import 'package:flutter/src/widgets/basic.dart';
@@ -14,7 +15,7 @@ class ContainerNetworkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCard(
         padding: const EdgeInsets.all(15.0),
-        height: 280,
+        height: 350,
         child: SingleChildScrollView(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -51,6 +52,16 @@ class ContainerNetworkCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 15),
+                  Text('Hosts extras', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                        children: entity.hostConfig!.extraHosts!.map((host) => CustomTextRow(icon: Icons.account_tree_outlined, text: host)).toList(),
+                      ).expanded()
+                    ],
+                  ),
+                  SizedBox(height: 15),
                   Text('Puertos', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -65,9 +76,7 @@ class ContainerNetworkCard extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Icon(Icons.account_tree_outlined, size: 16, color: AppTheme.blue),
-                                  SizedBox(width: 6),
-                                  Text('${port.port!}:${mapping.hostPort}', style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16))
+                                  CustomTextRow(icon: Icons.account_tree_outlined, text: '${port.port!}:${mapping.hostPort}').expanded()
                                 ],
                               ),
                             ),

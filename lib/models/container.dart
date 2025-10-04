@@ -298,7 +298,7 @@ class Data {
 }
 
 class HostConfig {
-  dynamic binds;
+  List<String>? binds;
   String? containerIdFile;
   LogConfig? logConfig;
   String? networkMode;
@@ -433,7 +433,7 @@ class HostConfig {
   String toRawJson() => json.encode(toJson());
 
   factory HostConfig.fromJson(Map<String, dynamic> json) => HostConfig(
-    binds: json["Binds"],
+    binds: json["Binds"] == null ? [] : List<String>.from(json["Binds"]!.map((x) => x)),
     containerIdFile: json["ContainerIDFile"],
     logConfig: json["LogConfig"] == null ? null : LogConfig.fromJson(json["LogConfig"]),
     networkMode: json["NetworkMode"],

@@ -4,7 +4,10 @@ import 'package:docker_client/models/container.dart' show DockerContainer;
 import 'package:docker_client/theme.dart' show AppTheme;
 import 'package:docker_client/utils/format-utils.dart' show FormatUtils;
 import 'package:docker_client/widgets/custom-card.dart' show CustomCard;
-import 'package:fluent_ui/fluent_ui.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, MainAxisAlignment, CrossAxisAlignment, TextStyle, Text, SizedBox, Column, Row;
+import 'package:docker_client/widgets/custom-text-row.dart' show CustomTextRow;
+import 'package:fluent_ui/fluent_ui.dart' show StatelessWidget, BuildContext, Widget, EdgeInsets, MainAxisAlignment, CrossAxisAlignment, TextStyle, Text, SizedBox, Column, Row, MainAxisSize;
+import 'package:flutter/material.dart' show Icons;
+import 'package:styled_widget/styled_widget.dart';
 
 class ContainerInfoCard extends StatelessWidget {
   final DockerContainer entity;
@@ -14,7 +17,7 @@ class ContainerInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCard(
         padding: const EdgeInsets.all(15.0),
-        height: 280,
+        height: 350,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -49,11 +52,20 @@ class ContainerInfoCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                if ( entity.state?.pid != null ) SizedBox(height: 15),
+                if ( entity.state?.pid != null ) Text('PID', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                if ( entity.state?.pid != null ) Text(entity.state!.pid.toString(), style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
                 SizedBox(height: 15),
                 Text('Comando', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
-                Text(entity.config!.entrypoint.toString(), style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
+                CustomTextRow(icon: Icons.terminal, text: entity.config!.entrypoint!.reduce((value, element) => '$value $element')),
+                SizedBox(height: 15),
+                Text('Binds', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children:entity.hostConfig!.binds!.map((host) => CustomTextRow(icon: Icons.account_tree_outlined, text: host)).toList(),
+                ).expanded(),
               ],
-            )
+            ).expanded()
           ],
         )
     );

@@ -186,7 +186,7 @@ class CpuStats {
   };
 
   double getContainerCpuUsage() {
-    return (cpuUsage?.totalUsage ?? 1) / (systemCpuUsage ?? 0) * 100;
+    return (cpuUsage?.totalUsage ?? 1) / ((systemCpuUsage ?? 0)* 1) * 100;
   }
 }
 

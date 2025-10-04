@@ -16,6 +16,7 @@ class ContainerListProvider extends ChangeNotifier {
   bool loadingStart = false;
   bool disposed = false;
   String? query;
+  String? portQuery;
 
   ContainerListProvider(this.addressesProvider) {
     loadData();
@@ -111,17 +112,33 @@ class ContainerListProvider extends ChangeNotifier {
     }
   }
 
-  setQuery(String query) {
-    this.query = query;
+  setQuery(String q) {
+    query = q;
     filterData();
   }
 
-  filterData() {
+  setPortQuery(String q) {
+    portQuery = q;
+    filterPortData();
+  }
+
+  void filterData() {
     if (query != null && query!.isNotEmpty) {
       elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(query!.toUpperCase())
           || element.simplifiedPort().contains(query!)
           || (element.image != null && element.image!.contains(query!))
           || (element.imageId != null && element.imageId!.contains(query!))
+      ).toList();
+    } else {
+      elements = totalElements;
+    }
+    notifyListeners();
+  }
+
+  void filterPortData() {
+    if (portQuery != null && portQuery!.isNotEmpty) {
+      elements = totalElements.where((element) => element.simplifiedName().toUpperCase().contains(portQuery!.toUpperCase())
+          || element.simplifiedPort().contains(portQuery!)
       ).toList();
     } else {
       elements = totalElements;
