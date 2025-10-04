@@ -23,6 +23,8 @@ class ContainerListStatus extends StatelessWidget {
             if ( entity.state != null ) createBadge(),
             if ( entity.created != null && showTime && dt != null) Text( FormatUtils.formatDate(dt, 'dd/MM/yyyy HH:mm'), style: style ),
             if ( entity.status != null && showTime) Text(entity.status!, style: style),
+            if ( entity.sizeRw != null) Text(FormatUtils.formatBytes(entity.sizeRw), style: style),
+            if ( entity.sizeRootFs != null) Text(FormatUtils.formatBytesComplete(entity.sizeRootFs), style: style),
           ]
       ),
     );

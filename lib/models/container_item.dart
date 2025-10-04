@@ -10,6 +10,8 @@ class ContainerItem {
   String? imageId;
   List<ContainerPort>? ports;
   int? created;
+  int? sizeRw;
+  int? sizeRootFs;
   String? state;
   String? status;
   String? address;
@@ -21,6 +23,8 @@ class ContainerItem {
     this.imageId,
     this.ports,
     this.created,
+    this.sizeRw,
+    this.sizeRootFs,
     this.state,
     this.status,
     this.address
@@ -57,6 +61,8 @@ class ContainerItem {
     imageId: json['ImageID'],
     ports: json['Ports'] != null? ContainerPort.listFromList(json['Ports']): [],
     created: json['Created'],
+    sizeRw: json['SizeRw'],
+    sizeRootFs: json['SizeRootFs'],
     state: json['State'],
     status: json['Status'],
     address: address

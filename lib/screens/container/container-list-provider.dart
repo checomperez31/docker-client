@@ -112,12 +112,12 @@ class ContainerListProvider extends ChangeNotifier {
     }
   }
 
-  setQuery(String q) {
+  void setQuery(String q) {
     query = q;
     filterData();
   }
 
-  setPortQuery(String q) {
+  void setPortQuery(String q) {
     portQuery = q;
     filterPortData();
   }

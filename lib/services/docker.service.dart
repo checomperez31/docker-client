@@ -22,7 +22,7 @@ class DockerService {
   }
 
   Future<List<ContainerItem>> getContainerList() async {
-    Uri uri = Uri.http(url, '/$client/containers/json', {'all': 'true'});
+    Uri uri = Uri.http(url, '/$client/containers/json', {'all': 'true', 'size':'true'});
     print( uri );
     try {
       final res = await http.get( uri );
