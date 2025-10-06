@@ -15,7 +15,7 @@ class ContainerNetworkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCard(
         padding: const EdgeInsets.all(15.0),
-        height: 350,
+        height: 390,
         child: SingleChildScrollView(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

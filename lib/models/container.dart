@@ -23,6 +23,8 @@ class DockerContainer {
   dynamic execIDs;
   HostConfig? hostConfig;
   GraphDriver? graphDriver;
+  int? sizeRw;
+  int? sizeRootFs;
   List<dynamic>? mounts;
   Config? config;
   NetworkSettings? networkSettings;
@@ -48,6 +50,8 @@ class DockerContainer {
     this.execIDs,
     this.hostConfig,
     this.graphDriver,
+    this.sizeRw,
+    this.sizeRootFs,
     this.mounts,
     this.config,
     this.networkSettings,
@@ -78,6 +82,8 @@ class DockerContainer {
     execIDs: json["ExecIDs"],
     hostConfig: json["HostConfig"] == null ? null : HostConfig.fromJson(json["HostConfig"]),
     graphDriver: json["GraphDriver"] == null ? null : GraphDriver.fromJson(json["GraphDriver"]),
+    sizeRw: json["SizeRw"],
+    sizeRootFs: json["SizeRootFs"],
     mounts: json["Mounts"] == null ? [] : List<dynamic>.from(json["Mounts"]!.map((x) => x)),
     config: json["Config"] == null ? null : Config.fromJson(json["Config"]),
     networkSettings: json["NetworkSettings"] == null ? null : NetworkSettings.fromJson(json["NetworkSettings"]),

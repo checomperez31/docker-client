@@ -17,7 +17,7 @@ class ContainerInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCard(
         padding: const EdgeInsets.all(15.0),
-        height: 350,
+        height: 390,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -37,6 +37,9 @@ class ContainerInfoCard extends StatelessWidget {
                         SizedBox(height: 15),
                         Text('Created', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
                         Text(FormatUtils.formatDate(entity.created!, 'dd/MM/yyyy HH:mm'), style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
+                        SizedBox(height: 15),
+                        Text('Size Rw', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                        Text(FormatUtils.formatBytesComplete(entity.sizeRw, isNull: 'NA'), style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
                       ],
                     ),
                     SizedBox(width: 40),
@@ -48,6 +51,9 @@ class ContainerInfoCard extends StatelessWidget {
                         SizedBox(height: 15),
                         Text('Driver', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
                         Text(entity.driver!, style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
+                        SizedBox(height: 15),
+                        Text('Size FS', style: TextStyle(color: AppTheme.textColor, fontSize: 13)),
+                        Text(FormatUtils.formatBytesComplete(entity.sizeRootFs, isNull: 'NA'), style: TextStyle(color: AppTheme.accentTextColor, fontSize: 16)),
                       ],
                     ),
                   ],

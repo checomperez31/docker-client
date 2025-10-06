@@ -5,6 +5,7 @@ class Preferences {
 
   static List<String>? _list;
   static String? _selected;
+  static int? _tail;
 
   static Future init() async {
     _instance = await SharedPreferences.getInstance();
@@ -13,6 +14,8 @@ class Preferences {
   static List<String> get list => _list ?? _instance.getStringList('list') ?? [];
 
   static String? get selected => _selected ?? _instance.getString('selected');
+
+  static int? get tail => _tail ?? _instance.getInt('tail');
 
   static set list(List<String>? value) {
     if ( value != null ) {
@@ -34,5 +37,13 @@ class Preferences {
     }
   }
 
-
+  static set tail(int? value) {
+    if ( value != null ) {
+      _tail = value;
+      _instance.setInt('tail', value);
+    } else {
+      _tail = null;
+      _instance.remove('tail');
+    }
+  }
 }

@@ -34,7 +34,7 @@ class DockerService {
   }
 
   Future<DockerContainer?> getContainerInfo(String id) async {
-    Uri uri = Uri.http(url, '/$client/containers/$id/json');
+    Uri uri = Uri.http(url, '/$client/containers/$id/json', {'size': 'true'});
     print( uri );
     try {
       final res = await http.get( uri );

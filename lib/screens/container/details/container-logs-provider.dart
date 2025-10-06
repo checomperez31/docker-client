@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:docker_client/preferences/preferences.dart';
 import 'package:docker_client/services/docker.service.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:docker_client/providers/containers_provider.dart';
@@ -22,6 +23,7 @@ class ContainerLogsProvider extends ChangeNotifier {
 
   ContainerLogsProvider(this.containersProvider) {
     containersProvider.addListener(updateData);
+    tail = Preferences.tail?.toString() ?? 50.toString();
     logs();
   }
 
@@ -33,6 +35,7 @@ class ContainerLogsProvider extends ChangeNotifier {
 
   Future<void> logs() async {
     loading = true;
+    Preferences.tail = int.tryParse(tail);
     notifyListeners();
     if ( containersProvider.selected != null ) {
       String logs =  await DockerService( containersProvider.selected!.address! ).containerLogs(containersProvider.selected!.id!, tail: tail, since: since, until: until, timestamps: timestamps);
