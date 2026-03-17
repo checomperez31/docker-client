@@ -28,7 +28,7 @@ class ContainerOverviewProvider extends ChangeNotifier {
     loading = true;
     notifyListeners();
     if ( containersProvider.selected != null ) {
-      entity = await DockerService( containersProvider.selected!.address! ).getContainerInfo(containersProvider.selected!.id!);
+      entity = await DockerService( containersProvider.selected!.address!, containersProvider.selected?.client ?? 'v1.24' ).getContainerInfo(containersProvider.selected!.id!);
     }
     loading = false;
     notifyListeners();
@@ -38,7 +38,7 @@ class ContainerOverviewProvider extends ChangeNotifier {
     loading = true;
     notifyListeners();
     if ( containersProvider.selected != null ) {
-      entityStats = await DockerService( containersProvider.selected!.address! ).getContainerStats(containersProvider.selected!.id!);
+      entityStats = await DockerService( containersProvider.selected!.address!, containersProvider.selected?.client ?? 'v1.24' ).getContainerStats(containersProvider.selected!.id!);
     }
     loading = false;
     notifyListeners();

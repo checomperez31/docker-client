@@ -28,7 +28,7 @@ class ContainerListProvider extends ChangeNotifier {
     notifyListeners();
     try {
       if (addressesProvider.usedAddress != null) {
-        totalElements = await DockerService(addressesProvider.usedAddress!).getContainerList();
+        totalElements = await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').getContainerList();
         filterData();
       }
     } catch (e) {
@@ -41,7 +41,7 @@ class ContainerListProvider extends ChangeNotifier {
   restart(String id) async {
     loadingRestart = true;
     notifyListeners();
-    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).restartContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').restartContainer(id);
     loadingRestart = false;
     await loadData();
   }
@@ -49,7 +49,7 @@ class ContainerListProvider extends ChangeNotifier {
   stop(String id) async {
     loadingStop = true;
     notifyListeners();
-    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).stopContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').stopContainer(id);
     loadingStop = false;
     await loadData();
   }
@@ -57,7 +57,7 @@ class ContainerListProvider extends ChangeNotifier {
   remove(String id) async {
     loadingKill = true;
     notifyListeners();
-    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).removeContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').removeContainer(id);
     loadingKill = false;
     await loadData();
   }
@@ -65,7 +65,7 @@ class ContainerListProvider extends ChangeNotifier {
   start(String id) async {
     loadingStart = true;
     notifyListeners();
-    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!).startContainer(id);
+    if (addressesProvider.usedAddress != null) await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').startContainer(id);
     loadingStart = false;
     await loadData();
   }
@@ -74,7 +74,7 @@ class ContainerListProvider extends ChangeNotifier {
     loadingStart = true;
     notifyListeners();
     if (addressesProvider.usedAddress != null) {
-      var entityDet = await DockerService(addressesProvider.usedAddress!).getContainerInfo(id);
+      var entityDet = await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').getContainerInfo(id);
       loadingStart = false;
       notifyListeners();
       return entityDet;
@@ -88,7 +88,7 @@ class ContainerListProvider extends ChangeNotifier {
     loadingStart = true;
     notifyListeners();
     if (addressesProvider.usedAddress != null) {
-      var data = await DockerService(addressesProvider.usedAddress!).createContainer( entity );
+      var data = await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').createContainer( entity );
       loadingStart = false;
       notifyListeners();
       return data;

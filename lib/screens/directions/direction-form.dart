@@ -6,6 +6,7 @@ import 'package:styled_widget/styled_widget.dart';
 class DirectionForm extends StatelessWidget {
   final TextEditingController ipController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController clientController = TextEditingController();
   final FocusNode fn = FocusNode();
   final Address address;
   DirectionForm({super.key, required this.address}) ;
@@ -15,6 +16,7 @@ class DirectionForm extends StatelessWidget {
     fn.requestFocus();
     if ( address.ip != null ) ipController.text = address.ip!;
     if ( address.name != null ) nameController.text = address.name!;
+    if ( address.client != null ) clientController.text = address.client!;
     return Form(
       child: ContentDialog(
         title: Text('Agregar direccion', style: TextStyle(fontSize: 19, color: AppTheme.accentTextColor)),
@@ -47,6 +49,18 @@ class DirectionForm extends StatelessWidget {
                   placeholder: 'IP',
                   placeholderStyle: TextStyle(color: Colors.white),
                   onChanged: (text) => address.ip = text,
+                  onSubmitted: (text) => validateForm(context),
+                ),
+                TextBox(
+                  controller: clientController,
+                  style: TextStyle(color: AppTheme.accentTextColor),
+                  cursorColor: AppTheme.accentTextColor,
+                  decoration: WidgetStatePropertyAll(BoxDecoration(
+                      color: AppTheme.buttonBgColor
+                  )),
+                  placeholder: 'Cliente',
+                  placeholderStyle: TextStyle(color: Colors.white),
+                  onChanged: (text) => address.client = text,
                   onSubmitted: (text) => validateForm(context),
                 )
               ],

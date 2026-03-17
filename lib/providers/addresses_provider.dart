@@ -4,6 +4,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 class AddressesProvider extends ChangeNotifier {
   String? usedAddress;
+  String? usedClient;
   List<Address> addresses = [];
 
   AddressesProvider() {
@@ -15,6 +16,7 @@ class AddressesProvider extends ChangeNotifier {
       }
     }).toList();
     usedAddress = Preferences.selected;
+    usedClient = Preferences.selectedClient;
   }
 
   test() {
@@ -53,13 +55,16 @@ class AddressesProvider extends ChangeNotifier {
 
   use(Address data) {
     usedAddress = data.ip;
+    usedClient = data.client ?? 'v1.24';
     Preferences.selected = usedAddress;
+    Preferences.selectedClient = usedClient;
     notifyListeners();
   }
 
   delete(int data) {
     addresses.removeAt(data);
     Preferences.selected = usedAddress;
+    Preferences.selectedClient = usedClient;
     Preferences.list = addresses.map((add) => add.toRawJson()).toList();
     notifyListeners();
   }

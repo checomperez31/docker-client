@@ -15,6 +15,7 @@ class ContainerItem {
   String? state;
   String? status;
   String? address;
+  String? client;
 
   ContainerItem({
     this.id,
@@ -27,7 +28,8 @@ class ContainerItem {
     this.sizeRootFs,
     this.state,
     this.status,
-    this.address
+    this.address,
+    this.client
   });
 
   String simplifiedName() {
@@ -54,7 +56,7 @@ class ContainerItem {
     return portsToReturn;
   }
 
-  factory ContainerItem.fromMap(Map<String, dynamic> json, {String? address}) => ContainerItem(
+  factory ContainerItem.fromMap(Map<String, dynamic> json, {String? address, String? client}) => ContainerItem(
     id: json['Id'],
     names: json['Names'] != null?(json['Names'] as List).map((e) => e.toString()).toList(): [],
     image: json['Image'],
@@ -65,16 +67,17 @@ class ContainerItem {
     sizeRootFs: json['SizeRootFs'],
     state: json['State'],
     status: json['Status'],
-    address: address
+    address: address,
+    client: client
   );
 
   factory ContainerItem.fromJson(String str) => ContainerItem.fromMap(json.decode( str ));
 
-  static List<ContainerItem> decodeListFromString(Uint8List bytes, {String? address}) {
-    return listFromString( utf8.decode( bytes ), address: address );
+  static List<ContainerItem> decodeListFromString(Uint8List bytes, {String? address, String? client}) {
+    return listFromString( utf8.decode( bytes ), address: address, client: client );
   }
 
-  static List<ContainerItem> listFromString(String str, {String? address}) {
-    return (json.decode( str ) as List).map((e) => ContainerItem.fromMap( e, address: address )).toList();
+  static List<ContainerItem> listFromString(String str, {String? address, String? client}) {
+    return (json.decode( str ) as List).map((e) => ContainerItem.fromMap( e, address: address, client: client )).toList();
   }
 }

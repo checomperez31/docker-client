@@ -19,7 +19,7 @@ class InfoCardsProvider extends ChangeNotifier {
     notifyListeners();
     try {
       if ( addressesProvider.usedAddress != null ) {
-        info = await DockerService(addressesProvider.usedAddress!).systemInfo();
+        info = await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').systemInfo();
       }
     } catch (e) {
       print(e);

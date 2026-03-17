@@ -38,7 +38,7 @@ class ContainerLogsProvider extends ChangeNotifier {
     Preferences.tail = int.tryParse(tail);
     notifyListeners();
     if ( containersProvider.selected != null ) {
-      String logs =  await DockerService( containersProvider.selected!.address! ).containerLogs(containersProvider.selected!.id!, tail: tail, since: since, until: until, timestamps: timestamps);
+      String logs =  await DockerService( containersProvider.selected!.address! , containersProvider.selected?.client ?? 'v1.24').containerLogs(containersProvider.selected!.id!, tail: tail, since: since, until: until, timestamps: timestamps);
       List<String> list = logs.split('\n').map((e) => e.length > 8? e.substring(8): e).toList();
       logList = list.map((e) {
         if (e.length >= 30 && e.substring(29, 30) == 'Z') {

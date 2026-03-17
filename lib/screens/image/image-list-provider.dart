@@ -22,7 +22,7 @@ class ImageListProvider extends ChangeNotifier {
     loading = true;
     notifyListeners();
     if ( addressesProvider.usedAddress != null ) {
-      totalElements = await DockerService(addressesProvider.usedAddress!).getImageList();
+      totalElements = await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').getImageList();
       filterData();
     }
     loading = false;
@@ -35,7 +35,7 @@ class ImageListProvider extends ChangeNotifier {
     var deleted = 0;
     if ( addressesProvider.usedAddress != null ) {
       try {
-        deleted = await DockerService(addressesProvider.usedAddress!).removeImage(id);
+        deleted = await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').removeImage(id);
       } catch (e) {
         loadingDelete = false;
         loadData();
@@ -50,7 +50,7 @@ class ImageListProvider extends ChangeNotifier {
   prune() async {
     loadingPrune = true;
     notifyListeners();
-    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!).pruneImages(true);
+    if ( addressesProvider.usedAddress != null ) await DockerService(addressesProvider.usedAddress!, addressesProvider.usedClient ?? 'v1.24').pruneImages(true);
     loadingPrune = false;
     await loadData();
   }

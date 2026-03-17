@@ -5,6 +5,7 @@ class Preferences {
 
   static List<String>? _list;
   static String? _selected;
+  static String? _selectedClient;
   static int? _tail;
 
   static Future init() async {
@@ -14,6 +15,7 @@ class Preferences {
   static List<String> get list => _list ?? _instance.getStringList('list') ?? [];
 
   static String? get selected => _selected ?? _instance.getString('selected');
+  static String? get selectedClient => _selectedClient ?? _instance.getString('selectedClient');
 
   static int? get tail => _tail ?? _instance.getInt('tail');
 
@@ -34,6 +36,16 @@ class Preferences {
     } else {
       _selected = null;
       _instance.remove('selected');
+    }
+  }
+
+  static set selectedClient(String? value) {
+    if ( value != null ) {
+      _selectedClient = value;
+      _instance.setString('selectedClient', value);
+    } else {
+      _selectedClient = null;
+      _instance.remove('selectedClient');
     }
   }
 

@@ -11,9 +11,7 @@ class DockerService {
   final String url;
   final String client;
 
-  DockerService(this.url, {
-    this.client = 'v1.24'
-  });
+  DockerService(this.url, this.client);
 
   Future<SystemInfo> systemInfo() async {
     Uri uri = Uri.http(url, '/$client/info');
@@ -26,7 +24,7 @@ class DockerService {
     print( uri );
     try {
       final res = await http.get( uri );
-      return ContainerItem.decodeListFromString(res.bodyBytes, address: url);
+      return ContainerItem.decodeListFromString(res.bodyBytes, address: url, client: client);
     } catch(e) {
       print(e);
       return [];
